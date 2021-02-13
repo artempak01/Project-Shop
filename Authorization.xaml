@@ -1,0 +1,17 @@
+﻿<Window x:Class="Музыкальный_магазин_пластинок.Authorization"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Музыкальный_магазин_пластинок"
+        mc:Ignorable="d"
+        Title="Authorization" Height="250" Width="355" Closed="Window_Close">
+    <Grid Margin="10">
+        <TextBlock Text="Авторизация" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Margin="124,24,131,145" Height="30"/>
+        <TextBox x:Name="LoginBox" Margin="140,59,37,114"/>
+        <PasswordBox x:Name="PassworBox" Margin="140,124,37,49"/>
+        <TextBlock HorizontalAlignment="Left" Margin="69,59,0,0" TextWrapping="Wrap" Text="Логин" VerticalAlignment="Top" Width="51"/>
+        <TextBlock HorizontalAlignment="Left" Margin="69,124,0,0" TextWrapping="Wrap" Text="Пароль" VerticalAlignment="Top" Width="51"/>
+        <Button x:Name="logonBtn" Content="Войти" HorizontalAlignment="Left" Margin="121,169,0,0" VerticalAlignment="Top" Width="75" Click="Logon"/>
+    </Grid>
+</Window>

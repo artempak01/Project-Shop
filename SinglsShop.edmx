@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Жанры">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Издатели">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Исполнители">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Пластинки">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="20" />
+          <Property Name="Год издания" Type="int" />
+          <Property Name="Количество треков" Type="int" />
+          <Property Name="Себестоимость" Type="money" />
+          <Property Name="Цена" Type="money" />
+          <Property Name="Скидка" Type="int" />
+          <Property Name="ID_зарезервировавшего" Type="int" />
+          <Property Name="Испольнитель_ID" Type="int" />
+          <Property Name="Издатель_ID" Type="int" />
+          <Property Name="Жанр_ID" Type="int" />
+          <Property Name="Количество" Type="int" />
+          <Property Name="Обложка" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Покупатели">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Имя" Type="nchar" MaxLength="10" />
+          <Property Name="Сумма покупок" Type="money" />
+        </EntityType>
+        <EntityType Name="Пользователи">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Логин" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Пароль" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Роль" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="20" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Продажи">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Дата_продажи" Type="date" />
+          <Property Name="Цена" Type="money" />
+          <Property Name="ID_пластинки" Type="int" />
+          <Property Name="ID_покупателя" Type="int" />
+        </EntityType>
+        <Association Name="FK__Пластинки__ID_за__4AB81AF0">
+          <End Role="Покупатели" Type="Self.Покупатели" Multiplicity="0..1" />
+          <End Role="Пластинки" Type="Self.Пластинки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Покупатели">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Пластинки">
+              <PropertyRef Name="ID_зарезервировавшего" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Пластинки__Жанр___4D94879B">
+          <End Role="Жанры" Type="Self.Жанры" Multiplicity="0..1" />
+          <End Role="Пластинки" Type="Self.Пластинки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Жанры">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Пластинки">
+              <PropertyRef Name="Жанр_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Пластинки__Издат__4CA06362">
+          <End Role="Издатели" Type="Self.Издатели" Multiplicity="0..1" />
+          <End Role="Пластинки" Type="Self.Пластинки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Издатели">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Пластинки">
+              <PropertyRef Name="Издатель_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Пластинки__Испол__4BAC3F29">
+          <End Role="Исполнители" Type="Self.Исполнители" Multiplicity="0..1" />
+          <End Role="Пластинки" Type="Self.Пластинки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Исполнители">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Пластинки">
+              <PropertyRef Name="Испольнитель_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Продажи__ID_плас__49C3F6B7">
+          <End Role="Пластинки" Type="Self.Пластинки" Multiplicity="0..1" />
+          <End Role="Продажи" Type="Self.Продажи" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пластинки">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Продажи">
+              <PropertyRef Name="ID_пластинки" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Продажи__ID_поку__33D4B598">
+          <End Role="Покупатели" Type="Self.Покупатели" Multiplicity="0..1" />
+          <End Role="Продажи" Type="Self.Продажи" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Покупатели">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Продажи">
+              <PropertyRef Name="ID_покупателя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ModelContainer">
+          <EntitySet Name="Жанры" EntityType="Self.Жанры" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Издатели" EntityType="Self.Издатели" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Исполнители" EntityType="Self.Исполнители" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Пластинки" EntityType="Self.Пластинки" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Покупатели" EntityType="Self.Покупатели" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Пользователи" EntityType="Self.Пользователи" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Продажи" EntityType="Self.Продажи" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Пластинки__ID_за__4AB81AF0" Association="Self.FK__Пластинки__ID_за__4AB81AF0">
+            <End Role="Покупатели" EntitySet="Покупатели" />
+            <End Role="Пластинки" EntitySet="Пластинки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Пластинки__Жанр___4D94879B" Association="Self.FK__Пластинки__Жанр___4D94879B">
+            <End Role="Жанры" EntitySet="Жанры" />
+            <End Role="Пластинки" EntitySet="Пластинки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Пластинки__Издат__4CA06362" Association="Self.FK__Пластинки__Издат__4CA06362">
+            <End Role="Издатели" EntitySet="Издатели" />
+            <End Role="Пластинки" EntitySet="Пластинки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Пластинки__Испол__4BAC3F29" Association="Self.FK__Пластинки__Испол__4BAC3F29">
+            <End Role="Исполнители" EntitySet="Исполнители" />
+            <End Role="Пластинки" EntitySet="Пластинки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Продажи__ID_плас__49C3F6B7" Association="Self.FK__Продажи__ID_плас__49C3F6B7">
+            <End Role="Пластинки" EntitySet="Пластинки" />
+            <End Role="Продажи" EntitySet="Продажи" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Продажи__ID_поку__33D4B598" Association="Self.FK__Продажи__ID_поку__33D4B598">
+            <End Role="Покупатели" EntitySet="Покупатели" />
+            <End Role="Продажи" EntitySet="Продажи" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Жанры">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Пластинки" Relationship="Model.FK__Пластинки__Жанр___4D94879B" FromRole="Жанры" ToRole="Пластинки" />
+        </EntityType>
+        <EntityType Name="Издатели">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Пластинки" Relationship="Model.FK__Пластинки__Издат__4CA06362" FromRole="Издатели" ToRole="Пластинки" />
+        </EntityType>
+        <EntityType Name="Исполнители">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Имя" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Пластинки" Relationship="Model.FK__Пластинки__Испол__4BAC3F29" FromRole="Исполнители" ToRole="Пластинки" />
+        </EntityType>
+        <EntityType Name="Покупатели">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Фамилия" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Сумма_покупок" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Продажи" Relationship="Self.FK__Продажи__ID_поку__33D4B598" FromRole="Покупатели" ToRole="Продажи" />
+          <NavigationProperty Name="Пластинки" Relationship="Model.FK__Пластинки__ID_за__4AB81AF0" FromRole="Покупатели" ToRole="Пластинки" />
+        </EntityType>
+        <EntityType Name="Пользователи">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Логин" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Пароль" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Роль" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Фамилия" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Продажи">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Дата_продажи" Type="DateTime" Precision="0" />
+          <Property Name="Цена" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ID_пластинки" Type="Int32" />
+          <Property Name="ID_покупателя" Type="Int32" />
+          <NavigationProperty Name="Покупатели" Relationship="Self.FK__Продажи__ID_поку__33D4B598" FromRole="Продажи" ToRole="Покупатели" />
+          <NavigationProperty Name="Пластинки" Relationship="Model.FK__Продажи__ID_плас__49C3F6B7" FromRole="Продажи" ToRole="Пластинки" />
+        </EntityType>
+        <Association Name="FK__Продажи__ID_поку__33D4B598">
+          <End Role="Покупатели" Type="Self.Покупатели" Multiplicity="0..1" />
+          <End Role="Продажи" Type="Self.Продажи" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Покупатели">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Продажи">
+              <PropertyRef Name="ID_покупателя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Магазин_пластинок_" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Жанры" EntityType="Self.Жанры" />
+          <EntitySet Name="Издатели" EntityType="Self.Издатели" />
+          <EntitySet Name="Исполнители" EntityType="Self.Исполнители" />
+          <EntitySet Name="Покупатели" EntityType="Self.Покупатели" />
+          <EntitySet Name="Пользователи" EntityType="Self.Пользователи" />
+          <EntitySet Name="Продажи" EntityType="Self.Продажи" />
+          <AssociationSet Name="FK__Продажи__ID_поку__33D4B598" Association="Self.FK__Продажи__ID_поку__33D4B598">
+            <End Role="Покупатели" EntitySet="Покупатели" />
+            <End Role="Продажи" EntitySet="Продажи" />
+          </AssociationSet>
+          <EntitySet Name="Пластинки" EntityType="Model.Пластинки" />
+          <AssociationSet Name="FK__Пластинки__Жанр___4D94879B" Association="Model.FK__Пластинки__Жанр___4D94879B">
+            <End Role="Жанры" EntitySet="Жанры" />
+            <End Role="Пластинки" EntitySet="Пластинки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Пластинки__Издат__4CA06362" Association="Model.FK__Пластинки__Издат__4CA06362">
+            <End Role="Издатели" EntitySet="Издатели" />
+            <End Role="Пластинки" EntitySet="Пластинки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Пластинки__Испол__4BAC3F29" Association="Model.FK__Пластинки__Испол__4BAC3F29">
+            <End Role="Исполнители" EntitySet="Исполнители" />
+            <End Role="Пластинки" EntitySet="Пластинки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Пластинки__ID_за__4AB81AF0" Association="Model.FK__Пластинки__ID_за__4AB81AF0">
+            <End Role="Покупатели" EntitySet="Покупатели" />
+            <End Role="Пластинки" EntitySet="Пластинки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Продажи__ID_плас__49C3F6B7" Association="Model.FK__Продажи__ID_плас__49C3F6B7">
+            <End Role="Пластинки" EntitySet="Пластинки" />
+            <End Role="Продажи" EntitySet="Продажи" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Пластинки">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Год_издания" Type="Int32" />
+          <Property Name="Количество_треков" Type="Int32" />
+          <Property Name="Себестоимость" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Цена" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Скидка" Type="Int32" />
+          <Property Name="ID_зарезервировавшего" Type="Int32" />
+          <Property Name="Испольнитель_ID" Type="Int32" />
+          <Property Name="Издатель_ID" Type="Int32" />
+          <Property Name="Жанр_ID" Type="Int32" />
+          <Property Name="Количество" Type="Int32" />
+          <Property Name="Обложка" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Жанры" Relationship="Model.FK__Пластинки__Жанр___4D94879B" FromRole="Пластинки" ToRole="Жанры" />
+          <NavigationProperty Name="Издатели" Relationship="Model.FK__Пластинки__Издат__4CA06362" FromRole="Пластинки" ToRole="Издатели" />
+          <NavigationProperty Name="Исполнители" Relationship="Model.FK__Пластинки__Испол__4BAC3F29" FromRole="Пластинки" ToRole="Исполнители" />
+          <NavigationProperty Name="Покупатели" Relationship="Model.FK__Пластинки__ID_за__4AB81AF0" FromRole="Пластинки" ToRole="Покупатели" />
+          <NavigationProperty Name="Продажи" Relationship="Model.FK__Продажи__ID_плас__49C3F6B7" FromRole="Пластинки" ToRole="Продажи" />
+        </EntityType>
+        <Association Name="FK__Пластинки__Жанр___4D94879B">
+          <End Type="Model.Жанры" Role="Жанры" Multiplicity="0..1" />
+          <End Type="Model.Пластинки" Role="Пластинки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Жанры">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Пластинки">
+              <PropertyRef Name="Жанр_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Пластинки__Издат__4CA06362">
+          <End Type="Model.Издатели" Role="Издатели" Multiplicity="0..1" />
+          <End Type="Model.Пластинки" Role="Пластинки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Издатели">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Пластинки">
+              <PropertyRef Name="Издатель_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Пластинки__Испол__4BAC3F29">
+          <End Type="Model.Исполнители" Role="Исполнители" Multiplicity="0..1" />
+          <End Type="Model.Пластинки" Role="Пластинки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Исполнители">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Пластинки">
+              <PropertyRef Name="Испольнитель_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Пластинки__ID_за__4AB81AF0">
+          <End Type="Model.Покупатели" Role="Покупатели" Multiplicity="0..1" />
+          <End Type="Model.Пластинки" Role="Пластинки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Покупатели">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Пластинки">
+              <PropertyRef Name="ID_зарезервировавшего" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Продажи__ID_плас__49C3F6B7">
+          <End Type="Model.Пластинки" Role="Пластинки" Multiplicity="0..1" />
+          <End Type="Model.Продажи" Role="Продажи" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пластинки">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Продажи">
+              <PropertyRef Name="ID_пластинки" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="Магазин_пластинок_">
+          <EntitySetMapping Name="Жанры">
+            <EntityTypeMapping TypeName="Model.Жанры">
+              <MappingFragment StoreEntitySet="Жанры">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Издатели">
+            <EntityTypeMapping TypeName="Model.Издатели">
+              <MappingFragment StoreEntitySet="Издатели">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Исполнители">
+            <EntityTypeMapping TypeName="Model.Исполнители">
+              <MappingFragment StoreEntitySet="Исполнители">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Покупатели">
+            <EntityTypeMapping TypeName="Model.Покупатели">
+              <MappingFragment StoreEntitySet="Покупатели">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Сумма_покупок" ColumnName="Сумма покупок" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Пользователи">
+            <EntityTypeMapping TypeName="Model.Пользователи">
+              <MappingFragment StoreEntitySet="Пользователи">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+                <ScalarProperty Name="Роль" ColumnName="Роль" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Продажи">
+            <EntityTypeMapping TypeName="Model.Продажи">
+              <MappingFragment StoreEntitySet="Продажи">
+                <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+                <ScalarProperty Name="Дата_продажи" ColumnName="Дата_продажи" />
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+                <ScalarProperty Name="ID_пластинки" ColumnName="ID_пластинки" />
+                <ScalarProperty Name="ID_покупателя" ColumnName="ID_покупателя" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Пластинки">
+            <EntityTypeMapping TypeName="Model.Пластинки">
+              <MappingFragment StoreEntitySet="Пластинки">
+                <ScalarProperty Name="Обложка" ColumnName="Обложка" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="Жанр_ID" ColumnName="Жанр_ID" />
+                <ScalarProperty Name="Издатель_ID" ColumnName="Издатель_ID" />
+                <ScalarProperty Name="Испольнитель_ID" ColumnName="Испольнитель_ID" />
+                <ScalarProperty Name="ID_зарезервировавшего" ColumnName="ID_зарезервировавшего" />
+                <ScalarProperty Name="Скидка" ColumnName="Скидка" />
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+                <ScalarProperty Name="Себестоимость" ColumnName="Себестоимость" />
+                <ScalarProperty Name="Количество_треков" ColumnName="Количество треков" />
+                <ScalarProperty Name="Год_издания" ColumnName="Год издания" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,69 @@
+﻿<Window x:Class="Музыкальный_магазин_пластинок.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Музыкальный_магазин_пластинок"
+        mc:Ignorable="d"
+        Title="Управление магазином пластинок" Height="702" Width="799" Icon="картинка.png">
+    <Grid>
+        <Menu x:Name="MainMenu" Height="25" VerticalAlignment="Top">
+            <Menu.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
+            </Menu.Background>
+            <MenuItem Header="Файл">
+                <MenuItem Header="Сменить пользователя" Click="LogOut" ></MenuItem>
+                <MenuItem Header="Добавить пластинку" >
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Выход" Click="Exit" ></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Правка" ></MenuItem>
+            <MenuItem Header="О программе" ></MenuItem>
+        </Menu>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="425*"/>
+                <ColumnDefinition Width="197*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="125*"/>
+                <RowDefinition Height="294*"/>
+            </Grid.RowDefinitions>
+            <Grid.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
+            </Grid.Background>
+            <TextBlock Text="Авторизация" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Margin="187,9,166,255" Height="30" Grid.Row="1" Grid.Column="1"/>
+            <TextBox x:Name="LoginBox" VerticalAlignment="Center" Margin="115,66,56,201" Grid.Row="1" Grid.Column="1"/>
+            <PasswordBox x:Name="PassworBox" VerticalAlignment="Center" KeyDown="PasswordEnter" Grid.Row="1" Grid.Column="1" Margin="115,112,56,152"/>
+            <TextBlock HorizontalAlignment="Left" Margin="30,66,0,0" TextWrapping="Wrap" Text="Логин" VerticalAlignment="Top" Width="51" Grid.Row="1" Grid.Column="1"/>
+            <TextBlock HorizontalAlignment="Left" Margin="30,112,0,0" TextWrapping="Wrap" Text="Пароль" VerticalAlignment="Top" Width="51" Grid.Row="1" Grid.Column="1"/>
+            <Button x:Name="logonBtn" Content="Войти" Click="Logon" Grid.Row="1" Grid.Column="1" Margin="176,173,138,78" Cursor="Arrow" ClickMode="Press"/>
+            <Label x:Name="statusLabl" Grid.ColumnSpan="2" Content="" HorizontalAlignment="Left" Margin="115,238,0,0" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="254" Background="Transparent" Foreground="#FFFF0034"/>
+        </Grid>
+        <TabControl x:Name="tabConMain" Margin="10,30,10,10">
+            <TabItem x:Name="tabItCatalog" Header="Каталог">
+                <Grid x:Name="CatalogGrid" Background="#FFE5E5E5" Margin="0,0,0,-12">
+                    <Button x:Name="btnSearch" Content="найти" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,10,34,0" Click="Found_Singls"/>
+                    <TextBox x:Name="tBoxSearch" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="527" KeyDown="Key_Enter"/>
+                    <DataGrid x:Name="LiViSearhResult" HorizontalAlignment="Left" Height="296" Margin="10,50,0,0" VerticalAlignment="Top" Width="746"/>
+                    <Grid x:Name="LogonGrid" Margin="219,76,220,76" Background="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionBrushKey}}" VerticalAlignment="Center" Height="204" HorizontalAlignment="Center"/>
+                    <ListView x:Name="listImageView" HorizontalAlignment="Left" Height="240" Margin="10,351,0,0" VerticalAlignment="Top" Width="746">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tbItmSale" Header="Продажа">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem x:Name="tbISales" Header="Акции" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
