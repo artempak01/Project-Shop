@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Музыкальный_магазин_пластинок"
         mc:Ignorable="d"
-        Title="Управление магазином пластинок" Height="702" Width="799" Icon="картинка.png">
+        Title="Управление магазином пластинок" Height="702" Width="594" Icon="картинка.png">
+    <Window.Resources>
+        <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\artem.pak01\source\repos\Музыкальный магазин пластинок\bin\debug\default.jpg"/>
+    </Window.Resources>
+
+
+
     <Grid>
         <Menu x:Name="MainMenu" Height="25" VerticalAlignment="Top">
             <Menu.Background>
@@ -42,20 +48,61 @@
             <Button x:Name="logonBtn" Content="Войти" Click="Logon" Grid.Row="1" Grid.Column="1" Margin="176,173,138,78" Cursor="Arrow" ClickMode="Press"/>
             <Label x:Name="statusLabl" Grid.ColumnSpan="2" Content="" HorizontalAlignment="Left" Margin="115,238,0,0" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="254" Background="Transparent" Foreground="#FFFF0034"/>
         </Grid>
-        <TabControl x:Name="tabConMain" Margin="10,30,10,10">
+        <TabControl x:Name="tabConMain" Margin="10,30,10,9">
             <TabItem x:Name="tabItCatalog" Header="Каталог">
                 <Grid x:Name="CatalogGrid" Background="#FFE5E5E5" Margin="0,0,0,-12">
                     <Button x:Name="btnSearch" Content="найти" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,10,34,0" Click="Found_Singls"/>
-                    <TextBox x:Name="tBoxSearch" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="527" KeyDown="Key_Enter"/>
-                    <DataGrid x:Name="LiViSearhResult" HorizontalAlignment="Left" Height="296" Margin="10,50,0,0" VerticalAlignment="Top" Width="746"/>
+                    <TextBox x:Name="tBoxSearch" Margin="10,10,143,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" KeyDown="Key_Enter"/>
+                    <DataGrid x:Name="LiViSearhResult" Height="41" Margin="10,160,23,0" VerticalAlignment="Top"/>
                     <Grid x:Name="LogonGrid" Margin="219,76,220,76" Background="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionBrushKey}}" VerticalAlignment="Center" Height="204" HorizontalAlignment="Center"/>
-                    <ListView x:Name="listImageView" HorizontalAlignment="Left" Height="240" Margin="10,351,0,0" VerticalAlignment="Top" Width="746">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <Grid Width="501" Margin="30,233,29,236" Background="AliceBlue">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="97*"/>
+                            <ColumnDefinition Width="289*"/>
+                            <ColumnDefinition Width="115*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.ColumnSpan="1" Source="{DynamicResource ImageSource1}"/>
+                        <Grid Grid.Column="1" Margin="5" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Название"/>
+                            <TextBox Text="{Binding Path=Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+                            <TextBlock Text="Исполнитель" Grid.Row="1"/>
+                            <TextBox Text="{Binding Path=Исполнители.Имя,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
+                            <TextBlock Text="Жанр" Grid.Row="2"/>
+                            <TextBox Text="{Binding Path=Жанры.Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/>
+                            <TextBlock Text="Издатель" Grid.Row="3"/>
+                            <TextBox Text="{Binding Path=Издатели.Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
+                            <TextBlock Text="Год издания" Grid.Row="4"/>
+                            <TextBox Text="{Binding Path=Год_издания, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+                            <TextBlock Text="Количество треков" Grid.Row="5"/>
+                            <TextBox Text="{Binding Path=Количество_треков, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5"/>
+                            <TextBlock Text="Себестоимость" Grid.Row="6"/>
+                            <TextBox Text="{Binding  Path=Себестоимость, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6"/>
+                            <TextBlock Text="Цена" Grid.Row="7"/>
+                            <TextBox Text="{Binding Path=Цена, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7"/>
+
+                        </Grid>
+                        <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="Количество" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding Path=Количество, Mode=Default, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20"/>
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock x:Name="tbltest" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+                    <TextBox x:Name="tbtest" HorizontalAlignment="Left" Height="23" Margin="92,37,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                    <ListBox x:Name="lbSearchResult" HorizontalAlignment="Left" Height="90" Margin="10,65,0,0" VerticalAlignment="Top" Width="516" SelectionChanged="ChooseSingle"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tbItmSale" Header="Продажа">

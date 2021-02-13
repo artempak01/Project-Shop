@@ -15,7 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Drawing;
 
 namespace Музыкальный_магазин_пластинок
 {
@@ -24,42 +23,32 @@ namespace Музыкальный_магазин_пластинок
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static string Access = "false";
+        private Пластинки CurientSingle = null;
         public MainWindow()
         {
             InitializeComponent();
-            //CreateCopy();
+            
             LogOut(new object(), new RoutedEventArgs());
+            LoginBox.Text = "1";
+            PassworBox.Password = "1";
+            CurientSingle = new Пластинки();
         }
 
         private void Found_Singls(object sender, RoutedEventArgs e)
         {
+            
+            lbSearchResult.Items.Clear();
+
             using (Магазин_пластинок_ магазин = new Магазин_пластинок_())
             {
                 магазин.Configuration.LazyLoadingEnabled = false;
                 var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(tBoxSearch.Text));
-                foreach (var pl in result)
+                foreach(var pl in result)
                 {
-                    магазин.Entry<Пластинки>(pl).Reference(s => s.Жанры).Load();
-                    магазин.Entry<Пластинки>(pl).Reference(s => s.Издатели).Load();
-                    магазин.Entry<Пластинки>(pl).Reference(s => s.Исполнители).Load();
+                    lbSearchResult.Items.Add(pl.Название);
                 }
-
-                foreach (var pl in result)
-                {
-
-                    BitmapImage imgsource = new BitmapImage();
-                    imgsource.BeginInit();
-                    imgsource.UriSource = new Uri(pl.Обложка, UriKind.Relative);
-                    //imgsource.StreamSource = memorystream;
-                    imgsource.EndInit();
-                    System.Windows.Controls.Image Image = new System.Windows.Controls.Image();
-                    Image.Source = imgsource;
-                    CatalogGrid.Children.Add(Image); // реальный Image
-                }
-                LiViSearhResult.ItemsSource = result.ToList<Пластинки>();
-                EditColumns();
             }
+
         }
 
         private void Key_Enter(object sender, KeyEventArgs e)
@@ -98,6 +87,8 @@ namespace Музыкальный_магазин_пластинок
                         MainMenu.Visibility = Visibility.Visible;
                         LoginBox.Text = String.Empty;
                         PassworBox.Password = String.Empty;
+                        //для теста
+                        tBoxSearch.Text = "eminem";
                         return;
                     }
                     else
@@ -116,6 +107,8 @@ namespace Музыкальный_магазин_пластинок
                     PassworBox.Password = String.Empty;
                 }
             }
+            
+            
         }
         private void LogOut(object sender, RoutedEventArgs e)
         {
@@ -124,8 +117,6 @@ namespace Музыкальный_магазин_пластинок
             tBoxSearch.Text = String.Empty;
             LiViSearhResult.ItemsSource = null;
             MainMenu.Visibility = Visibility.Collapsed;
-
-
         }
         private void Exit(object sender, RoutedEventArgs e)
         {
@@ -136,54 +127,25 @@ namespace Музыкальный_магазин_пластинок
         {
             if (e.Key == Key.Enter) Logon(sender, new RoutedEventArgs());
         }
-        private void EditColumns()
-        {
-            LiViSearhResult.Columns.Remove(LiViSearhResult.Columns.Where(s => s.Header.Equals("Жанр_ID")).FirstOrDefault());
-            LiViSearhResult.Columns.Remove(LiViSearhResult.Columns.Where(s => s.Header.Equals("Испольнитель_ID")).FirstOrDefault());
-            LiViSearhResult.Columns.Remove(LiViSearhResult.Columns.Where(s => s.Header.Equals("Издатель_ID")).FirstOrDefault());
-            LiViSearhResult.Columns.Remove(LiViSearhResult.Columns.Where(s => s.Header.Equals("Покупатели")).FirstOrDefault());
-            LiViSearhResult.Columns.Remove(LiViSearhResult.Columns.Where(s => s.Header.Equals("Продажи")).FirstOrDefault());
-            LiViSearhResult.Columns[0].Visibility = Visibility.Hidden;
-            LiViSearhResult.Columns[2].Header = "Год издания";
-            LiViSearhResult.Columns[3].Header = "Количество треков";
-            LiViSearhResult.Columns[7].Header = "Кем зарезервирован";
-            LiViSearhResult.Columns[8].Header = "Жанр";
-            LiViSearhResult.Columns[9].Header = "Издатель";
-            LiViSearhResult.Columns[10].Header = "Испольнитель";
-        }
-        //private byte[] CreateCopy()
-        //{
-        //    System.Drawing.Image img = System.Drawing.Image.FromFile(@"C:\Users\artem.pak01\Downloads\Eminem_-_the_eminem_show.jpg");
-        //    int maxWidth = 300, maxHeight = 300;
-        //    //размеры выбраны произвольно
-        //    double ratioX = (double)maxWidth /
-        //    img.Width;
-        //    double ratioY = (double)maxHeight /
-        //    img.Height;
-        //    double ratio = Math.Min(ratioX, ratioY);
-        //    int newWidth = (int)(img.Width * ratio);
-        //    int newHeight = (int)(img.Height * ratio);
-        //    System.Drawing.Image mi = new Bitmap(newWidth, newHeight);
-        //    //рисунок в памяти
-        //    Graphics g = Graphics.FromImage(mi);
-        //    g.DrawImage(img, 0, 0, newWidth, newHeight);
-        //    MemoryStream ms = new MemoryStream();
-        //    //поток для ввода|вывода байт из памяти
-        //    mi.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-        //    ms.Flush();//выносим в поток все данные
-        //               //из буфера
-        //    ms.Seek(0, SeekOrigin.Begin);
-        //    BinaryReader br = new BinaryReader(ms);
-        //    byte[] buf = br.ReadBytes((int)ms.Length);
-        //    using (Магазин_пластинок_ магазин = new Магазин_пластинок_())
-        //    {
-        //        магазин.Configuration.LazyLoadingEnabled = false;
-        //        var result = магазин.Пластинки.Where<Пластинки>(s => s.Испольнитель_ID == 7).FirstOrDefault();
-        //        result.Обложка = buf;
-        //        магазин.SaveChanges();
-        //    }
-        //    return buf;
+       
 
-        //}
+        private void ChooseSingle(object sender, SelectionChangedEventArgs e)
+        {
+            //this.Resources.Clear();
+
+            if (lbSearchResult.SelectedIndex == -1) return;
+            using (Магазин_пластинок_ магазин = new Магазин_пластинок_())
+            {
+                магазин.SaveChanges();
+                магазин.Configuration.LazyLoadingEnabled = false;
+                CurientSingle = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(lbSearchResult.SelectedItem.ToString())).FirstOrDefault();
+                    магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Жанры).Load();
+                    магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Издатели).Load();
+                    магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Исполнители).Load();
+               
+                this.DataContext = CurientSingle;
+            }
+        }
     }
+    
 }
