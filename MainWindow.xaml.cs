@@ -24,7 +24,7 @@ namespace Музыкальный_магазин_пластинок
     public partial class MainWindow : Window
     {
         Пластинки CurientSingle = new Пластинки();
-        Пластинки SalingSingle = null;
+        Пластинки SalingSingle = new Пластинки();
         Магазин_пластинок_ магазин = new Магазин_пластинок_();
         public MainWindow()
         {
@@ -128,7 +128,7 @@ namespace Музыкальный_магазин_пластинок
             магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Жанры).Load();
             магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Издатели).Load();
             магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Исполнители).Load();
-            DataContext = CurientSingle;
+            CurrSingle.DataContext = CurientSingle;
             
             Обложка.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + CurientSingle.Обложка));
         }

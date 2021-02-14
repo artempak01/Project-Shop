@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Музыкальный_магазин_пластинок"
         mc:Ignorable="d"
-        Title="Управление магазином пластинок" Height="442.5" Width="576" Icon="картинка.png">
+        Title="Управление магазином пластинок" Height="437" Width="769" Icon="картинка.png">
     <Window.Resources>
         <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\artem.pak01\source\repos\Музыкальный магазин пластинок\bin\debug\default.jpg"/>
     </Window.Resources>
@@ -40,16 +40,16 @@
         <TabControl x:Name="tabConMain" Margin="10,30,10,0" Height="369" VerticalAlignment="Top">
             <TabItem x:Name="tabItCatalog" Header="Каталог">
                 <Grid x:Name="CatalogGrid" Background="#FFE5E5E5" Height="350.5" VerticalAlignment="Top" Margin="0,0,-3,0">
-                    <Button x:Name="btnSearch" Content="найти" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,10,34,0" Click="Found_Singls"/>
-                    <TextBox x:Name="tBoxSearch" Margin="10,10,143,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" KeyDown="Key_Enter"/>
+                    <Button x:Name="btnSearch" Content="найти" HorizontalAlignment="Right" VerticalAlignment="Top" Width="102" Margin="0,10,27,0" Click="Found_Singls"/>
+                    <TextBox x:Name="tBoxSearch" Margin="0,10,134,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" KeyDown="Key_Enter" HorizontalAlignment="Right" Width="602"/>
                     <Grid x:Name="LogonGrid" Margin="219,76,220,76" Background="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionBrushKey}}" VerticalAlignment="Center" Height="204" HorizontalAlignment="Center"/>
-                    <Grid Margin="10,140,27,0" Background="AliceBlue" Height="155" VerticalAlignment="Top">
+                    <Grid x:Name="CurrSingle" DataContext="CurientSingle" Margin="10,170,27,0" Background="AliceBlue" Height="160" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="97*"/>
                             <ColumnDefinition Width="289*"/>
                             <ColumnDefinition Width="115*"/>
                         </Grid.ColumnDefinitions>
-                        <Image x:Name="Обложка" Grid.ColumnSpan="1" />
+                        <Image x:Name="Обложка" Grid.ColumnSpan="1" Margin="5" />
                         <Grid Grid.Column="1" Margin="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -88,31 +88,37 @@
                             <TextBox Text="{Binding Path=Количество, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20"/>
                         </StackPanel>
                     </Grid>
-                    <ListBox x:Name="lbSearchResult" HorizontalAlignment="Left" Height="90" Margin="10,45,0,0" VerticalAlignment="Top" Width="516" SelectionChanged="ChooseSingle"/>
+                    <ListBox x:Name="lbSearchResult" Height="110" Margin="347,45,27,0" VerticalAlignment="Top" SelectionChanged="ChooseSingle"/>
+                    <ListBox x:Name="lbSearchResult_" Height="110" Margin="10,45,404,0" VerticalAlignment="Top" SelectionChanged="ChooseSingle"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tbItmSale" Header="Продажа" Background="#FFE5E5E5">
-                <DockPanel >
-                    <Grid DockPanel.Dock="Top" Margin="0,0,0,6">
-                        <TextBox x:Name="tBoxSearchContent" Width="400" HorizontalAlignment="Left" Margin="5,2,0,2"/>
-                        <Button Width="135" Content="Найти" HorizontalAlignment="Right" Margin="5,2" Click="SearchSinglToSale"/>
+                <DockPanel Background="#FFE5E5E5">
+                    <Grid DockPanel.Dock="Top" Margin="0,0,0,6" Height="30">
+                        <TextBox x:Name="tBoxSearchContent" Width="582" HorizontalAlignment="Left" Margin="5,2,0,2"/>
+                        <Button Width="135" Content="Найти" HorizontalAlignment="Right" Margin="5,2" Click="SearchSinglToSale">
+                            <Button.Background>
+                                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.InactiveCaptionColorKey}}"/>
+                            </Button.Background>
+                        </Button>
                     </Grid>
-                    <ListBox x:Name="lbSearchResaltToSale" DockPanel.Dock="Left" Width="112" Background="#FFE5E5E5" Margin="5" SelectionChanged="ChooseSingleToSale"/>
-                    <DockPanel DockPanel.Dock="Right" Background="#FFE5E5E5" Margin="6,5,5,5">
-                        <TextBlock DockPanel.Dock="Top" Height="25"/>
-                        <TextBlock DockPanel.Dock="Top" Height="25"/>
-                        <WrapPanel DockPanel.Dock="Bottom" Height="20"/>
-                        <DockPanel DockPanel.Dock="Bottom" Height="29" Margin="5">
-                            <Button DockPanel.Dock="Right" Width="117" Margin="0" Content="Продать"/>
-                            <Button DockPanel.Dock="Right" Width="117" Margin="0" Content="Зарезервировать"/>
+                    <ListBox x:Name="lbSearchResaltToSale" DockPanel.Dock="Left" Width="162" Margin="5,5,5,10" SelectionChanged="ChooseSingleToSale" IsManipulationEnabled="True"/>
+                    <DockPanel DockPanel.Dock="Right" Margin="6,5,5,5">
+                        <DockPanel DockPanel.Dock="Bottom" Height="23" Margin="5" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
+                            <Button DockPanel.Dock="Right" Width="117" Margin="0" Content="Продать">
+                                <Button.Background>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.InactiveCaptionColorKey}}"/>
+                                </Button.Background>
+                            </Button>
+                            <Button DockPanel.Dock="Right" Width="117" Margin="0" Content="Зарезервировать" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}"/>
                         </DockPanel>
-                        <Grid x:Name="SingleToSale" Margin="6,20,6,20" DockPanel.Dock="Bottom" Background="#FFE5E5E5" Height="150">
+                        <Grid x:Name="SingleToSale" DataContext="SalingSingle;" Margin="6,20,6,20" DockPanel.Dock="Bottom" Height="148" Width="533" Background="AliceBlue">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="97*"/>
-                                <ColumnDefinition Width="289*"/>
-                                <ColumnDefinition Width="115*"/>
+                                <ColumnDefinition Width="93*"/>
+                                <ColumnDefinition Width="240*"/>
+                                <ColumnDefinition Width="74*"/>
                             </Grid.ColumnDefinitions>
-                            <Image x:Name="Обложка_" Grid.ColumnSpan="1" />
+                            <Image x:Name="Обложка_" Grid.ColumnSpan="1" Margin="5" />
                             <Grid Grid.Column="1" Margin="5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -126,32 +132,34 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
-                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Text="Название"/>
-                                <TextBox Text="{Binding Path=Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+                                <TextBox Text="{Binding Path=Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" IsReadOnly="True"/>
                                 <TextBlock Text="Исполнитель" Grid.Row="1"/>
-                                <TextBox Text="{Binding Path=Исполнители.Имя,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
+                                <TextBox Text="{Binding Path=Исполнители.Имя,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" IsReadOnly="True"/>
                                 <TextBlock Text="Жанр" Grid.Row="2"/>
-                                <TextBox Text="{Binding Path=Жанр_ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/>
+                                <TextBox Text="{Binding Path=Жанр_ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2" IsReadOnly="True"/>
                                 <TextBlock Text="Издатель" Grid.Row="3"/>
-                                <TextBox Text="{Binding Path=Издатели.Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
+                                <TextBox Text="{Binding Path=Издатели.Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" IsReadOnly="True"/>
                                 <TextBlock Text="Год издания" Grid.Row="4"/>
-                                <TextBox Text="{Binding Path=Год_издания, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+                                <TextBox Text="{Binding Path=Год_издания, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" IsReadOnly="True"/>
                                 <TextBlock Text="Количество треков" Grid.Row="5"/>
-                                <TextBox Text="{Binding Path=Количество_треков, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5"/>
-                                <TextBlock Text="Себестоимость" Grid.Row="6"/>
-                                <TextBox Text="{Binding  Path=Себестоимость, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6"/>
-                                <TextBlock Text="Цена" Grid.Row="7"/>
-                                <TextBox Text="{Binding Path=Цена, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7"/>
+                                <TextBox Text="{Binding Path=Количество_треков, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" IsReadOnly="True"/>
+                                <TextBlock Text="Цена" Grid.Row="6"/>
+                                <TextBox Text="{Binding Path=Цена, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" IsReadOnly="True"/>
                             </Grid>
-                            <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="34" Margin="3,57,7,57" Width="64">
                                 <TextBlock Text="Количество" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <TextBox Text="{Binding Path=Количество, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20"/>
+                                <TextBox Text="{Binding Path=Количество, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" IsReadOnly="True"/>
                             </StackPanel>
                         </Grid>
+                        <Grid DockPanel.Dock="Bottom" Height="29">
+                            <ComboBox Margin="10,0" ></ComboBox>
+                        </Grid>
+                        <Grid DockPanel.Dock="Bottom" Height="26" Width="398">
+                            <TextBlock Text="Выберите клиента, если он зарегистрирован в системе" Margin="48,0,47,0" Height="21" VerticalAlignment="Top"/>
+                        </Grid>
                     </DockPanel>
-
                 </DockPanel>
             </TabItem>
             <TabItem x:Name="tbISales" Header="Акции" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
