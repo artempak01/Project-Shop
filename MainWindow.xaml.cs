@@ -23,12 +23,11 @@ namespace Музыкальный_магазин_пластинок
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static Пластинки CurientSingle = new Пластинки();
-        
-        public Магазин_пластинок_ магазин = new Магазин_пластинок_();
+        Пластинки CurientSingle = new Пластинки();
+        Пластинки SalingSingle = null;
+        Магазин_пластинок_ магазин = new Магазин_пластинок_();
         public MainWindow()
         {
-            CurientSingle.Обложка = @"C:\Users\artem.pak01\source\repos\Музыкальный магазин пластинок\bin\debug\default.jpg";
             InitializeComponent();
             LogOut(new object(), new RoutedEventArgs());
             
@@ -73,7 +72,6 @@ namespace Музыкальный_магазин_пластинок
             {
                 if (User.Пароль == PassworBox.Password)
                 {
-
                     tabConMain.Visibility = Visibility.Visible;
                     tabItCatalog.Visibility = Visibility.Visible;
                     tBoxSearch.Visibility = Visibility.Visible;
@@ -101,7 +99,6 @@ namespace Музыкальный_магазин_пластинок
                 LoginBox.Text = String.Empty;
                 PassworBox.Password = String.Empty;
             }
-
         }
 
         private void LogOut(object sender, RoutedEventArgs e)
@@ -132,7 +129,34 @@ namespace Музыкальный_магазин_пластинок
             магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Издатели).Load();
             магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Исполнители).Load();
             DataContext = CurientSingle;
+            
             Обложка.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + CurientSingle.Обложка));
+        }
+
+        private void SearchSinglToSale(object sender, RoutedEventArgs e)
+        {
+            lbSearchResaltToSale.Items.Clear();
+            магазин.Configuration.LazyLoadingEnabled = false;
+            var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(tBoxSearchContent.Text));
+            foreach (var pl in result)
+            {
+                lbSearchResaltToSale.Items.Add(pl.Название);
+            }
+        }
+
+        private void ChooseSingleToSale(object sender, SelectionChangedEventArgs e)
+        {
+            if (lbSearchResaltToSale.SelectedIndex == -1) return;
+            if (SalingSingle == null) SalingSingle = new Пластинки();
+            магазин.SaveChanges();
+            магазин.Configuration.LazyLoadingEnabled = false;
+            SalingSingle = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(lbSearchResaltToSale.SelectedItem.ToString())).FirstOrDefault();
+            магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Жанры).Load();
+            магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Издатели).Load();
+            магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Исполнители).Load();
+            SingleToSale.DataContext = SalingSingle;
+
+            Обложка_.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + SalingSingle.Обложка));
         }
     }
 
