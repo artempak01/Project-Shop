@@ -23,32 +23,31 @@ namespace Музыкальный_магазин_пластинок
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Пластинки CurientSingle = null;
+        public static Пластинки CurientSingle = new Пластинки();
+        
+        public Магазин_пластинок_ магазин = new Магазин_пластинок_();
         public MainWindow()
         {
+            CurientSingle.Обложка = @"C:\Users\artem.pak01\source\repos\Музыкальный магазин пластинок\bin\debug\default.jpg";
             InitializeComponent();
-            
             LogOut(new object(), new RoutedEventArgs());
+            
+            ///для теста
             LoginBox.Text = "1";
             PassworBox.Password = "1";
-            CurientSingle = new Пластинки();
+            Logon(new object(), new RoutedEventArgs());
         }
 
         private void Found_Singls(object sender, RoutedEventArgs e)
         {
-            
+
             lbSearchResult.Items.Clear();
-
-            using (Магазин_пластинок_ магазин = new Магазин_пластинок_())
+            магазин.Configuration.LazyLoadingEnabled = false;
+            var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(tBoxSearch.Text));
+            foreach (var pl in result)
             {
-                магазин.Configuration.LazyLoadingEnabled = false;
-                var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(tBoxSearch.Text));
-                foreach(var pl in result)
-                {
-                    lbSearchResult.Items.Add(pl.Название);
-                }
+                lbSearchResult.Items.Add(pl.Название);
             }
-
         }
 
         private void Key_Enter(object sender, KeyEventArgs e)
@@ -68,56 +67,51 @@ namespace Музыкальный_магазин_пластинок
                 statusLabl.Content = "Не указан логин!";
                 return;
             }
-            using (Магазин_пластинок_ магазин = new Магазин_пластинок_())
-            {
-                var User = магазин.Пользователи.FirstOrDefault<Пользователи>(s => s.Логин == LoginBox.Text);
-                if (User != null)
-                {
-                    if (User.Пароль == PassworBox.Password)
-                    {
 
-                        tabConMain.Visibility = Visibility.Visible;
-                        tabItCatalog.Visibility = Visibility.Visible;
-                        tBoxSearch.Visibility = Visibility.Visible;
-                        LogonGrid.Visibility = Visibility.Hidden;
-                        btnSearch.Visibility = Visibility.Visible;
-                        tbISales.Visibility = Visibility.Visible;
-                        tbItmSale.Visibility = Visibility.Visible;
-                        LiViSearhResult.Visibility = Visibility.Visible;
-                        MainMenu.Visibility = Visibility.Visible;
-                        LoginBox.Text = String.Empty;
-                        PassworBox.Password = String.Empty;
-                        //для теста
-                        tBoxSearch.Text = "eminem";
-                        return;
-                    }
-                    else
-                    {
-                        LoginBox.Text = String.Empty;
-                        PassworBox.Password = String.Empty;
-                        statusLabl.Content = "Пара логин/пароль некорректная!";
-                        LoginBox.Text = String.Empty;
-                        PassworBox.Password = String.Empty;
-                    }
+            var User = магазин.Пользователи.FirstOrDefault<Пользователи>(s => s.Логин == LoginBox.Text);
+            if (User != null)
+            {
+                if (User.Пароль == PassworBox.Password)
+                {
+
+                    tabConMain.Visibility = Visibility.Visible;
+                    tabItCatalog.Visibility = Visibility.Visible;
+                    tBoxSearch.Visibility = Visibility.Visible;
+                    LogonGrid.Visibility = Visibility.Hidden;
+                    btnSearch.Visibility = Visibility.Visible;
+                    tbISales.Visibility = Visibility.Visible;
+                    tbItmSale.Visibility = Visibility.Visible;
+                    MainMenu.Visibility = Visibility.Visible;
+                    LoginBox.Text = String.Empty;
+                    PassworBox.Password = String.Empty;
+                    return;
                 }
                 else
                 {
+                    LoginBox.Text = String.Empty;
+                    PassworBox.Password = String.Empty;
                     statusLabl.Content = "Пара логин/пароль некорректная!";
                     LoginBox.Text = String.Empty;
                     PassworBox.Password = String.Empty;
                 }
             }
-            
-            
+            else
+            {
+                statusLabl.Content = "Пара логин/пароль некорректная!";
+                LoginBox.Text = String.Empty;
+                PassworBox.Password = String.Empty;
+            }
+
         }
+
         private void LogOut(object sender, RoutedEventArgs e)
         {
             tabConMain.Visibility = Visibility.Collapsed;
             LogonGrid.Visibility = Visibility.Visible;
             tBoxSearch.Text = String.Empty;
-            LiViSearhResult.ItemsSource = null;
             MainMenu.Visibility = Visibility.Collapsed;
         }
+
         private void Exit(object sender, RoutedEventArgs e)
         {
             Close();
@@ -127,25 +121,19 @@ namespace Музыкальный_магазин_пластинок
         {
             if (e.Key == Key.Enter) Logon(sender, new RoutedEventArgs());
         }
-       
 
         private void ChooseSingle(object sender, SelectionChangedEventArgs e)
         {
-            //this.Resources.Clear();
-
             if (lbSearchResult.SelectedIndex == -1) return;
-            using (Магазин_пластинок_ магазин = new Магазин_пластинок_())
-            {
-                магазин.SaveChanges();
-                магазин.Configuration.LazyLoadingEnabled = false;
-                CurientSingle = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(lbSearchResult.SelectedItem.ToString())).FirstOrDefault();
-                    магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Жанры).Load();
-                    магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Издатели).Load();
-                    магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Исполнители).Load();
-               
-                this.DataContext = CurientSingle;
-            }
+            магазин.SaveChanges();
+            магазин.Configuration.LazyLoadingEnabled = false;
+            CurientSingle = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(lbSearchResult.SelectedItem.ToString())).FirstOrDefault();
+            магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Жанры).Load();
+            магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Издатели).Load();
+            магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Исполнители).Load();
+            DataContext = CurientSingle;
+            Обложка.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + CurientSingle.Обложка));
         }
     }
-    
+
 }
