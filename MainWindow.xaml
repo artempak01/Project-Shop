@@ -43,14 +43,14 @@
                     <Button x:Name="btnSearch" Content="найти" HorizontalAlignment="Right" VerticalAlignment="Top" Width="102" Margin="0,10,27,0" Click="Found_Singls"/>
                     <TextBox x:Name="tBoxSearch" Margin="0,10,134,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" KeyDown="Key_Enter" HorizontalAlignment="Right" Width="602"/>
                     <Grid x:Name="LogonGrid" Margin="219,76,220,76" Background="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionBrushKey}}" VerticalAlignment="Center" Height="204" HorizontalAlignment="Center"/>
-                    <Grid x:Name="CurrSingle" DataContext="CurientSingle" Margin="10,170,27,0" Background="AliceBlue" Height="160" VerticalAlignment="Top">
+                    <Grid ShowGridLines="True" x:Name="CurrSingle" DataContext="CurientSingle" Margin="10,170,27,0" Background="AliceBlue" Height="160" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="97*"/>
                             <ColumnDefinition Width="289*"/>
                             <ColumnDefinition Width="115*"/>
                         </Grid.ColumnDefinitions>
                         <Image x:Name="Обложка" Grid.ColumnSpan="1" Margin="5" />
-                        <Grid Grid.Column="1" Margin="5">
+                        <Grid x:Name="SingleInfo" Grid.Column="1" Margin="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
@@ -88,8 +88,8 @@
                             <TextBox Text="{Binding Path=Количество, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20"/>
                         </StackPanel>
                     </Grid>
-                    <ListBox x:Name="lbSearchResult" Height="110" Margin="347,45,27,0" VerticalAlignment="Top" SelectionChanged="ChooseSingle"/>
-                    <ListBox x:Name="lbSearchResult_" Height="110" Margin="10,45,404,0" VerticalAlignment="Top" SelectionChanged="ChooseSingle"/>
+                    <ListBox x:Name="lbSearchSinglesResult" Height="110" Margin="347,45,27,0" VerticalAlignment="Top" SelectionChanged="ChooseSingle"/>
+                    <ListBox x:Name="lbSearchArtistResult" Height="110" Margin="10,45,404,0" VerticalAlignment="Top" SelectionChanged="ChooseSingles"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tbItmSale" Header="Продажа" Background="#FFE5E5E5">
@@ -112,17 +112,18 @@
                             </Button>
                             <Button DockPanel.Dock="Right" Width="117" Margin="0" Content="Зарезервировать" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}"/>
                         </DockPanel>
-                        <Grid x:Name="SingleToSale" DataContext="SalingSingle;" Margin="6,20,6,20" DockPanel.Dock="Bottom" Height="148" Width="533" Background="AliceBlue">
+                        <Grid ShowGridLines="True" x:Name="SingleToSale" DataContext="SalingSingle;" Margin="6,20,6,20" DockPanel.Dock="Bottom" Height="148" Width="542" Background="AliceBlue">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="93*"/>
-                                <ColumnDefinition Width="240*"/>
-                                <ColumnDefinition Width="74*"/>
+                                <ColumnDefinition Width="122*"/>
+                                <ColumnDefinition Width="271*"/>
+                                <ColumnDefinition Width="64*"/>
+                                <ColumnDefinition Width="76*"/>
                             </Grid.ColumnDefinitions>
                             <Image x:Name="Обложка_" Grid.ColumnSpan="1" Margin="5" />
                             <Grid Grid.Column="1" Margin="5">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="27*"/>
+                                    <ColumnDefinition Width="28*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
@@ -148,13 +149,17 @@
                                 <TextBlock Text="Цена" Grid.Row="6"/>
                                 <TextBox Text="{Binding Path=Цена, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" IsReadOnly="True"/>
                             </Grid>
-                            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="34" Margin="3,57,7,57" Width="64">
-                                <TextBlock Text="Количество" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <TextBox Text="{Binding Path=Количество, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" IsReadOnly="True"/>
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="46" Margin="0,40,5.5,62" Width="58.5">
+                                <TextBlock Text="В наличии" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBox TextAlignment="Center" Text="{Binding Path=Количество, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" IsReadOnly="True"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="46" Margin="6.5,40,10,62" Width="59.5">
+                                <TextBlock Text="К продаже" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Width="67.5" Margin="0.5,0,-8.5,0"/>
+                                <TextBox  HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" TextAlignment="Center"/>
                             </StackPanel>
                         </Grid>
                         <Grid DockPanel.Dock="Bottom" Height="29">
-                            <ComboBox Margin="10,0" ></ComboBox>
+                            <ComboBox x:Name="CustomersList" Margin="10,2" ></ComboBox>
                         </Grid>
                         <Grid DockPanel.Dock="Bottom" Height="26" Width="398">
                             <TextBlock Text="Выберите клиента, если он зарегистрирован в системе" Margin="48,0,47,0" Height="21" VerticalAlignment="Top"/>
