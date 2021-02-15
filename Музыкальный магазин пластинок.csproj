@@ -68,6 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CodeFile1.cs" />
     <Compile Include="SinglsShop.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

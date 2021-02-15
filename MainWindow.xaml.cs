@@ -40,7 +40,6 @@ namespace Музыкальный_магазин_пластинок
         private void Found_Singls(object sender, RoutedEventArgs e)
         {
 
-            ClearCurientSinglGrid();
             lbSearchSinglesResult.Items.Clear();
             магазин.Configuration.LazyLoadingEnabled = false;
             var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(tBoxSearch.Text));
@@ -142,34 +141,9 @@ namespace Музыкальный_магазин_пластинок
             Обложка.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + CurientSingle.Обложка));
         }
 
-        private void SearchSinglToSale(object sender, RoutedEventArgs e)
-        {
-            lbSearchResaltToSale.Items.Clear();
-            магазин.Configuration.LazyLoadingEnabled = false;
-            var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(tBoxSearchContent.Text));
-            foreach (var pl in result)
-            {
-                lbSearchResaltToSale.Items.Add(pl.Название);
-            }
-        }
+        
 
-        private void ChooseSingleToSale(object sender, SelectionChangedEventArgs e)
-        {
-            if (lbSearchResaltToSale.SelectedIndex == -1) return;
-            if (SalingSingle == null) SalingSingle = new Пластинки();
-            магазин.SaveChanges();
-            магазин.Configuration.LazyLoadingEnabled = false;
-            SalingSingle = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(lbSearchResaltToSale.SelectedItem.ToString())).FirstOrDefault();
-            магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Жанры).Load();
-            магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Издатели).Load();
-            магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Исполнители).Load();
-            SingleToSale.DataContext = SalingSingle;
-            CustomersList.Items.Clear();
-            CustomersList.Items.Add("--клиент не зарегистрирован--");
-            CustomersList.SelectedIndex = 0;
-            foreach (var customer in магазин.Покупатели) CustomersList.Items.Add(customer.Фамилия + " " + customer.Имя);
-            Обложка_.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + SalingSingle.Обложка));
-        }
+      
 
         private void ChooseSingles(object sender, SelectionChangedEventArgs e)
         {
@@ -183,15 +157,7 @@ namespace Музыкальный_магазин_пластинок
                 lbSearchSinglesResult.Items.Add(pl.Название);
             }
         }
-        private void ClearCurientSinglGrid()
-        {
-            Обложка.Source = null;
-            CurientSingle = new Пластинки();
-            foreach(var tb in SingleInfo.Children.OfType<TextBox>())
-            {
-                tb.Text = String.Empty;
-            }
-        }
+       
     }
 
 }
