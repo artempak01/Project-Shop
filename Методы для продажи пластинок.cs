@@ -21,12 +21,12 @@ namespace Музыкальный_магазин_пластинок
              
         private void SearchSinglToSale(object sender, RoutedEventArgs e)
         {
-            lbSearchResaltToSale.Items.Clear();
+            lbSearchResultToSale.Items.Clear();
             магазин.Configuration.LazyLoadingEnabled = false;
-            var result = магазин.Пластинки.Where<Пластинки>(s => (s.Название.Contains(tBoxSearchContent.Text) && s.Количество > 0));
+            var result = магазин.Пластинки.Where<Пластинки>(s => (s.Название.Contains(tBoxSearchToSale.Text) && s.Количество > 0));
             foreach (var pl in result)
             {
-                lbSearchResaltToSale.Items.Add(pl.Название);
+                lbSearchResultToSale.Items.Add(pl.Название);
             }
         }
 
@@ -38,20 +38,20 @@ namespace Музыкальный_магазин_пластинок
 
         private void ChooseSingleToSale(object sender, SelectionChangedEventArgs e)
         {
-            if (lbSearchResaltToSale.SelectedIndex == -1) return;
+            if (lbSearchResultToSale.SelectedIndex == -1) return;
             if (SalingSingle == null) SalingSingle = new Пластинки();
             магазин.SaveChanges();
             магазин.Configuration.LazyLoadingEnabled = false;
-            SalingSingle = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(lbSearchResaltToSale.SelectedItem.ToString())).FirstOrDefault();
+            SalingSingle = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(lbSearchResultToSale.SelectedItem.ToString())).FirstOrDefault();
             магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Жанры).Load();
             магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Издатели).Load();
             магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Исполнители).Load();
-            SingleToSale.DataContext = SalingSingle;
+            SingleToSaleGrid.DataContext = SalingSingle;
             CustomersList.Items.Clear();
             CustomersList.Items.Add("--клиент не зарегистрирован--");
             CustomersList.SelectedIndex = 0;
             foreach (var customer in магазин.Покупатели) CustomersList.Items.Add(customer.Фамилия + " " + customer.Имя);
-            Обложка_.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + SalingSingle.Обложка));
+            SellingCover.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + SalingSingle.Обложка));
         }
        
         /// <summary>

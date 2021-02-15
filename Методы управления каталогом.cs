@@ -29,7 +29,7 @@ namespace Музыкальный_магазин_пластинок
 
             lbSearchSinglesResult.Items.Clear();
             магазин.Configuration.LazyLoadingEnabled = false;
-            var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(tBoxSearch.Text));
+            var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(tBoxSearchCatalog.Text));
             foreach (var pl in result)
             {
                 lbSearchSinglesResult.Items.Add(pl.Название);
@@ -37,7 +37,7 @@ namespace Музыкальный_магазин_пластинок
             магазин.SaveChanges();
             lbSearchArtistResult.Items.Clear();
             магазин.Configuration.LazyLoadingEnabled = false;
-            var result_1 = магазин.Исполнители.Where<Исполнители>(s => s.Имя.Contains(tBoxSearch.Text));
+            var result_1 = магазин.Исполнители.Where<Исполнители>(s => s.Имя.Contains(tBoxSearchCatalog.Text));
             foreach (var Art in result_1)
             {
                 lbSearchArtistResult.Items.Add(Art.Имя);
@@ -48,7 +48,7 @@ namespace Музыкальный_магазин_пластинок
         {
             if (e.Key == Key.Enter)
             {
-                if (tBoxSearch.Text.Length >= 0) Found_Singls(sender, new RoutedEventArgs());
+                if (tBoxSearchCatalog.Text.Length >= 0) Found_Singls(sender, new RoutedEventArgs());
                 else MessageBox.Show("Введите текст для поиска", "Внимание", MessageBoxButton.OK);
             }
         }
@@ -62,9 +62,9 @@ namespace Музыкальный_магазин_пластинок
             магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Жанры).Load();
             магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Издатели).Load();
             магазин.Entry<Пластинки>(CurientSingle).Reference(s => s.Исполнители).Load();
-            CurrSingle.DataContext = CurientSingle;
+            CurientSingleGrid.DataContext = CurientSingle;
 
-            Обложка.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + CurientSingle.Обложка));
+            CurientCover.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + CurientSingle.Обложка));
         }
 
         private void ChooseSingles(object sender, SelectionChangedEventArgs e)

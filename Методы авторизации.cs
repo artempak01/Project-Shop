@@ -15,7 +15,7 @@ namespace Музыкальный_магазин_пластинок
             LogOut(sender, e);
             if (LoginBox.Text == String.Empty)
             {
-                statusLabl.Content = "Не указан логин!";
+                StatusLable.Content = "Не указан логин!";
                 return;
             }
 
@@ -24,30 +24,44 @@ namespace Музыкальный_магазин_пластинок
             {
                 if (User.Пароль == PassworBox.Password)
                 {
-                    tabConMain.Visibility = Visibility.Visible;
-                    tabItCatalog.Visibility = Visibility.Visible;
-                    tBoxSearch.Visibility = Visibility.Visible;
-                    LogonGrid.Visibility = Visibility.Hidden;
-                    btnSearch.Visibility = Visibility.Visible;
-                    tbISales.Visibility = Visibility.Visible;
-                    tbItmSale.Visibility = Visibility.Visible;
-                    MainMenu.Visibility = Visibility.Visible;
-                    LoginBox.Text = String.Empty;
-                    PassworBox.Password = String.Empty;
-                    return;
+                    switch (User.Роль)
+                    {
+                        case "admin":
+                            MainTabControl.Visibility = Visibility.Visible;
+                            CatalogTabItem.Visibility = Visibility.Visible;
+                            SalesTabItem.Visibility = Visibility.Visible;
+                            SaleTabItem.Visibility = Visibility.Visible;
+                            MainMenu.Visibility = Visibility.Visible;
+                            LogonGrid.Visibility = Visibility.Hidden;
+                            LoginBox.Text = String.Empty;
+                            PassworBox.Password = String.Empty;
+                            return;
+                        case "seller":
+                            MainTabControl.Visibility = Visibility.Visible;
+                            CatalogTabItem.Visibility = Visibility.Collapsed;
+                            LogonGrid.Visibility = Visibility.Hidden;
+                            SalesTabItem.Visibility = Visibility.Collapsed;
+                            SaleTabItem.IsSelected = true;                            
+                            SaleTabItem.Visibility = Visibility.Visible;
+                            MainMenu.Visibility = Visibility.Visible;
+                            LoginBox.Text = String.Empty;
+                            PassworBox.Password = String.Empty;
+                            return;
+                    }
+                    
                 }
                 else
                 {
                     LoginBox.Text = String.Empty;
                     PassworBox.Password = String.Empty;
-                    statusLabl.Content = "Пара логин/пароль некорректная!";
+                    StatusLable.Content = "Пара логин/пароль некорректная!";
                     LoginBox.Text = String.Empty;
                     PassworBox.Password = String.Empty;
                 }
             }
             else
             {
-                statusLabl.Content = "Пара логин/пароль некорректная!";
+                StatusLable.Content = "Пара логин/пароль некорректная!";
                 LoginBox.Text = String.Empty;
                 PassworBox.Password = String.Empty;
             }
@@ -55,10 +69,26 @@ namespace Музыкальный_магазин_пластинок
 
         private void LogOut(object sender, RoutedEventArgs e)
         {
-            tabConMain.Visibility = Visibility.Collapsed;
-            LogonGrid.Visibility = Visibility.Visible;
-            tBoxSearch.Text = String.Empty;
+            ///очищаем заполненные поля
+            CurientSingle = new Пластинки();
+            SalingSingle = new Пластинки();
+            SellingCover.Source = null;
+            CurientCover.Source = null;
+            CurientSingleGrid.DataContext = CurientSingle;
+            SingleToSaleGrid.DataContext = SalingSingle;
+            CustomersList.Items.Clear();
+            lbSearchArtistResult.Items.Clear();
+            lbSearchSinglesResult.Items.Clear();
+            lbSearchResultToSale.Items.Clear();
+            tBoxSearchToSale.Text = String.Empty;
+            tBoxSearchCatalog.Text = String.Empty;
+            
+            ///скрываем интерфейс
+            MainTabControl.Visibility = Visibility.Collapsed;
             MainMenu.Visibility = Visibility.Collapsed;
+            
+            ///показываем интерфейс авторизации
+            LogonGrid.Visibility = Visibility.Visible;
         }
 
 

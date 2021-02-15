@@ -35,25 +35,25 @@
             <TextBlock HorizontalAlignment="Left" Margin="30,66,0,0" TextWrapping="Wrap" Text="Логин" VerticalAlignment="Top" Width="51" />
             <TextBlock HorizontalAlignment="Left" Margin="30,112,0,0" TextWrapping="Wrap" Text="Пароль" VerticalAlignment="Top" Width="51" />
             <Button x:Name="logonBtn" Content="Войти" Click="Logon"  Margin="176,173,90.592,19.216" Cursor="Arrow" ClickMode="Press"/>
-            <Label x:Name="statusLabl" Grid.ColumnSpan="2" Content="" HorizontalAlignment="Left" Margin="115,238,0,-4.785" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="254" Background="Transparent" Foreground="#FFFF0034"/>
+            <Label x:Name="StatusLable" Grid.ColumnSpan="2" Content="" HorizontalAlignment="Left" Margin="115,238,0,-4.785" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="254" Background="Transparent" Foreground="#FFFF0034"/>
         </Grid>
-        <TabControl x:Name="tabConMain" Margin="10,30,10,-16" Height="385" VerticalAlignment="Top">
-            <TabItem x:Name="tabItCatalog" Header="Каталог">
+        <TabControl x:Name="MainTabControl" Margin="10,30,10,-16" Height="385" VerticalAlignment="Top">
+            <TabItem x:Name="CatalogTabItem" Header="Каталог">
                 <Grid x:Name="CatalogGrid" Background="#FFE5E5E5" Margin="0,0,-3,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="87*"/>
                         <ColumnDefinition Width="659*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btnSearch" Content="найти" HorizontalAlignment="Right" VerticalAlignment="Top" Width="102" Margin="0,10,27,0" Click="Found_Singls" Grid.Column="1"/>
-                    <TextBox x:Name="tBoxSearch" Margin="0,10,134,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" KeyDown="Key_Enter" HorizontalAlignment="Right" Width="602" Grid.ColumnSpan="2"/>
+                    <Button x:Name="btnSearchCatalog" Content="найти" HorizontalAlignment="Right" VerticalAlignment="Top" Width="102" Margin="0,10,27,0" Click="Found_Singls" Grid.Column="1"/>
+                    <TextBox x:Name="tBoxSearchCatalog" Margin="0,10,134,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" KeyDown="Key_Enter" HorizontalAlignment="Right" Width="602" Grid.ColumnSpan="2"/>
                     <Grid x:Name="LogonGrid" Margin="285,68,374,68" Background="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionBrushKey}}" VerticalAlignment="Center" Height="204" HorizontalAlignment="Center" Grid.Column="1"/>
-                    <Grid ShowGridLines="True" x:Name="CurrSingle" DataContext="CurientSingle" Margin="10,170,27,0" Background="AliceBlue" Height="160" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                    <Grid ShowGridLines="True" x:Name="CurientSingleGrid" DataContext="CurientSingle" Margin="10,170,27,0" Background="AliceBlue" Height="160" VerticalAlignment="Top" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="97*"/>
                             <ColumnDefinition Width="289*"/>
                             <ColumnDefinition Width="115*"/>
                         </Grid.ColumnDefinitions>
-                        <Image x:Name="Обложка" Grid.ColumnSpan="1" Margin="5" />
+                        <Image x:Name="CurientCover" Grid.ColumnSpan="1" Margin="5" />
                         <Grid x:Name="SingleInfo" Grid.Column="1" Margin="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -99,17 +99,17 @@
                     <TextBlock HorizontalAlignment="Left" TextAlignment="Center" Margin="260,40,0,0" TextWrapping="Wrap" Text="Выберите пластинку"  VerticalAlignment="Top" Width="372" Grid.Column="1"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tbItmSale" Header="Продажа" Background="#FFE5E5E5">
+            <TabItem x:Name="SaleTabItem" Header="Продажа" Background="#FFE5E5E5">
                 <DockPanel Background="#FFE5E5E5">
                     <Grid DockPanel.Dock="Top" Margin="0,0,0,6" Height="30">
-                        <TextBox x:Name="tBoxSearchContent" Width="582" HorizontalAlignment="Left" Margin="5,2,0,2"/>
+                        <TextBox x:Name="tBoxSearchToSale" Width="582" HorizontalAlignment="Left" Margin="5,2,0,2"/>
                         <Button Width="135" Content="Найти" HorizontalAlignment="Right" Margin="5,2" Click="SearchSinglToSale">
                             <Button.Background>
                                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.InactiveCaptionColorKey}}"/>
                             </Button.Background>
                         </Button>
                     </Grid>
-                    <ListBox x:Name="lbSearchResaltToSale" DockPanel.Dock="Left" Width="162" Margin="5,5,5,10" SelectionChanged="ChooseSingleToSale" IsManipulationEnabled="True"/>
+                    <ListBox x:Name="lbSearchResultToSale" DockPanel.Dock="Left" Width="162" Margin="5,5,5,10" SelectionChanged="ChooseSingleToSale" IsManipulationEnabled="True"/>
                     <DockPanel DockPanel.Dock="Right" Margin="6,5,5,5">
                         <DockPanel DockPanel.Dock="Bottom" Height="23" Margin="5" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
                             <Button DockPanel.Dock="Right" Width="117" Margin="0" Content="Продать" Click="SaleSingle">
@@ -119,14 +119,14 @@
                             </Button>
                             <Button DockPanel.Dock="Right" Width="117" Margin="0" Content="Зарезервировать" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}"/>
                         </DockPanel>
-                        <Grid ShowGridLines="True" x:Name="SingleToSale" DataContext="SalingSingle;" Margin="6,20,6,20" DockPanel.Dock="Bottom" Height="148" Width="542" Background="AliceBlue">
+                        <Grid ShowGridLines="True" x:Name="SingleToSaleGrid" DataContext="SalingSingle;" Margin="6,20,6,20" DockPanel.Dock="Bottom" Height="148" Width="542" Background="AliceBlue">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="122*"/>
                                 <ColumnDefinition Width="271*"/>
                                 <ColumnDefinition Width="64*"/>
                                 <ColumnDefinition Width="76*"/>
                             </Grid.ColumnDefinitions>
-                            <Image x:Name="Обложка_" Grid.ColumnSpan="1" Margin="5" />
+                            <Image x:Name="SellingCover" Grid.ColumnSpan="1" Margin="5" />
                             <Grid Grid.Column="1" Margin="5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="27*"/>
@@ -174,7 +174,7 @@
                     </DockPanel>
                 </DockPanel>
             </TabItem>
-            <TabItem x:Name="tbISales" Header="Акции" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+            <TabItem x:Name="SalesTabItem" Header="Акции" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
