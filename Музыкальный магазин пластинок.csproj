@@ -68,7 +68,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CodeFile1.cs" />
+    <Compile Include="Методы авторизации.cs" />
+    <Compile Include="Методы для продажи пластинок.cs" />
     <Compile Include="SinglsShop.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -93,6 +94,7 @@
     <Compile Include="Исполнители.cs">
       <DependentUpon>SinglsShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Методы управления каталогом.cs" />
     <Compile Include="Пластинки.cs">
       <DependentUpon>SinglsShop.tt</DependentUpon>
     </Compile>
