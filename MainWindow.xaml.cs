@@ -41,6 +41,8 @@ namespace Музыкальный_магазин_пластинок
         {
             StatusBar.Text = String.Empty;
         }
+
+       
     }
 
 }

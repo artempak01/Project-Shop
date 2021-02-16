@@ -94,10 +94,12 @@
                             <TextBox Text="{Binding Path=Количество, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20"/>
                         </StackPanel>
                     </Grid>
-                    <ListBox x:Name="lbSearchSinglesResult" Height="90" Margin="344.551,65,27,0" VerticalAlignment="Top" SelectionChanged="ChooseSingle"/>
-                    <ListBox x:Name="lbSearchArtistResult" Height="90" Margin="10,65,404,0" VerticalAlignment="Top" SelectionChanged="ChooseSingles"/>
-                    <TextBlock Text="Выберите исполнителя" TextAlignment="Center" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317"/>
-                    <TextBlock HorizontalAlignment="Left" TextAlignment="Center" Margin="344.551,40,0,0" TextWrapping="Wrap" Text="Выберите пластинку"  VerticalAlignment="Top" Width="372"/>
+                    <ListBox x:Name="lbSearchSinglesResult" Height="90" Margin="492.551,65,27,0" VerticalAlignment="Top" SelectionChanged="ChooseSingle"/>
+                    <ListBox x:Name="lbSearchArtistResult" Height="90" Margin="10,65,498,0" VerticalAlignment="Top" SelectionChanged="ChooseSingles"/>
+                    <TextBlock Text="Выберите исполнителя" TextAlignment="Center" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151"/>
+                    <TextBlock HorizontalAlignment="Left" TextAlignment="Center" Margin="480,40,0,0" TextWrapping="Wrap" Text="Выберите пластинку"  VerticalAlignment="Top" Width="206"/>
+                    <TextBlock Text="Выберите жанр" TextAlignment="Center" HorizontalAlignment="Left" Margin="256.051,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178.5"/>
+                    <ListBox x:Name="lbSearchGenreResult" HorizontalAlignment="Left" Height="90" Margin="256.051,65,0,0" VerticalAlignment="Top" Width="192" SelectionChanged="FindAllContentByGanre"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="SaleTabItem" Header="Продажа" Background="#FFE5E5E5" Margin="509.5,0,-509.5,0" Width="92" LostFocus="ClearStatusBar">
