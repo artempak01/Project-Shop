@@ -31,6 +31,7 @@ namespace Музыкальный_магазин_пластинок
                             CatalogTabItem.Visibility = Visibility.Visible;
                             SalesTabItem.Visibility = Visibility.Visible;
                             SaleTabItem.Visibility = Visibility.Visible;
+                            SalesResultsTabItem.Visibility = Visibility.Visible;
                             MainMenu.Visibility = Visibility.Visible;
                             LogonGrid.Visibility = Visibility.Hidden;
                             LoginBox.Text = String.Empty;
@@ -41,8 +42,9 @@ namespace Музыкальный_магазин_пластинок
                             CatalogTabItem.Visibility = Visibility.Collapsed;
                             LogonGrid.Visibility = Visibility.Hidden;
                             SalesTabItem.Visibility = Visibility.Collapsed;
-                            SaleTabItem.IsSelected = true;                            
+                            SalesResultsTabItem.Visibility = Visibility.Collapsed;
                             SaleTabItem.Visibility = Visibility.Visible;
+                            SaleTabItem.IsSelected = true;                            
                             MainMenu.Visibility = Visibility.Visible;
                             LoginBox.Text = String.Empty;
                             PassworBox.Password = String.Empty;

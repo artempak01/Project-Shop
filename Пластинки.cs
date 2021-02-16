@@ -33,6 +33,7 @@ namespace Музыкальный_магазин_пластинок
         public Nullable<int> Жанр_ID { get; set; }
         public Nullable<int> Количество { get; set; }
         public string Обложка { get; set; }
+        public Nullable<int> Количество_зарезервировано { get; set; }
     
         public virtual Жанры Жанры { get; set; }
         public virtual Издатели Издатели { get; set; }

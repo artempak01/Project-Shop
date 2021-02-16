@@ -38,6 +38,7 @@
           <Property Name="Цена" Type="money" />
           <Property Name="Скидка" Type="int" />
           <Property Name="ID_зарезервировавшего" Type="int" />
+          <Property Name="Количество зарезервировано" Type="int" />
           <Property Name="Испольнитель_ID" Type="int" />
           <Property Name="Издатель_ID" Type="int" />
           <Property Name="Жанр_ID" Type="int" />
@@ -75,7 +76,7 @@
           <Property Name="ID_покупателя" Type="int" />
           <Property Name="Количество" Type="int" />
         </EntityType>
-        <Association Name="FK__Пластинки__ID_за__4AB81AF0">
+        <Association Name="FK__Пластинки__ID_за__5DCAEF64">
           <End Role="Покупатели" Type="Self.Покупатели" Multiplicity="0..1" />
           <End Role="Пластинки" Type="Self.Пластинки" Multiplicity="*" />
           <ReferentialConstraint>
@@ -87,7 +88,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Пластинки__Жанр___4D94879B">
+        <Association Name="FK__Пластинки__Жанр___60A75C0F">
           <End Role="Жанры" Type="Self.Жанры" Multiplicity="0..1" />
           <End Role="Пластинки" Type="Self.Пластинки" Multiplicity="*" />
           <ReferentialConstraint>
@@ -99,7 +100,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Пластинки__Издат__4CA06362">
+        <Association Name="FK__Пластинки__Издат__5FB337D6">
           <End Role="Издатели" Type="Self.Издатели" Multiplicity="0..1" />
           <End Role="Пластинки" Type="Self.Пластинки" Multiplicity="*" />
           <ReferentialConstraint>
@@ -111,7 +112,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Пластинки__Испол__4BAC3F29">
+        <Association Name="FK__Пластинки__Испол__5EBF139D">
           <End Role="Исполнители" Type="Self.Исполнители" Multiplicity="0..1" />
           <End Role="Пластинки" Type="Self.Пластинки" Multiplicity="*" />
           <ReferentialConstraint>
@@ -123,7 +124,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Продажи__ID_плас__49C3F6B7">
+        <Association Name="FK__Продажи__ID_плас__5CD6CB2B">
           <End Role="Пластинки" Type="Self.Пластинки" Multiplicity="0..1" />
           <End Role="Продажи" Type="Self.Продажи" Multiplicity="*" />
           <ReferentialConstraint>
@@ -155,23 +156,23 @@
           <EntitySet Name="Покупатели" EntityType="Self.Покупатели" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Пользователи" EntityType="Self.Пользователи" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Продажи" EntityType="Self.Продажи" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Пластинки__ID_за__4AB81AF0" Association="Self.FK__Пластинки__ID_за__4AB81AF0">
+          <AssociationSet Name="FK__Пластинки__ID_за__5DCAEF64" Association="Self.FK__Пластинки__ID_за__5DCAEF64">
             <End Role="Покупатели" EntitySet="Покупатели" />
             <End Role="Пластинки" EntitySet="Пластинки" />
           </AssociationSet>
-          <AssociationSet Name="FK__Пластинки__Жанр___4D94879B" Association="Self.FK__Пластинки__Жанр___4D94879B">
+          <AssociationSet Name="FK__Пластинки__Жанр___60A75C0F" Association="Self.FK__Пластинки__Жанр___60A75C0F">
             <End Role="Жанры" EntitySet="Жанры" />
             <End Role="Пластинки" EntitySet="Пластинки" />
           </AssociationSet>
-          <AssociationSet Name="FK__Пластинки__Издат__4CA06362" Association="Self.FK__Пластинки__Издат__4CA06362">
+          <AssociationSet Name="FK__Пластинки__Издат__5FB337D6" Association="Self.FK__Пластинки__Издат__5FB337D6">
             <End Role="Издатели" EntitySet="Издатели" />
             <End Role="Пластинки" EntitySet="Пластинки" />
           </AssociationSet>
-          <AssociationSet Name="FK__Пластинки__Испол__4BAC3F29" Association="Self.FK__Пластинки__Испол__4BAC3F29">
+          <AssociationSet Name="FK__Пластинки__Испол__5EBF139D" Association="Self.FK__Пластинки__Испол__5EBF139D">
             <End Role="Исполнители" EntitySet="Исполнители" />
             <End Role="Пластинки" EntitySet="Пластинки" />
           </AssociationSet>
-          <AssociationSet Name="FK__Продажи__ID_плас__49C3F6B7" Association="Self.FK__Продажи__ID_плас__49C3F6B7">
+          <AssociationSet Name="FK__Продажи__ID_плас__5CD6CB2B" Association="Self.FK__Продажи__ID_плас__5CD6CB2B">
             <End Role="Пластинки" EntitySet="Пластинки" />
             <End Role="Продажи" EntitySet="Продажи" />
           </AssociationSet>
@@ -285,6 +286,7 @@
           <NavigationProperty Name="Исполнители" Relationship="Model.FK__Пластинки__Испол__4BAC3F29" FromRole="Пластинки" ToRole="Исполнители" />
           <NavigationProperty Name="Покупатели" Relationship="Model.FK__Пластинки__ID_за__4AB81AF0" FromRole="Пластинки" ToRole="Покупатели" />
           <NavigationProperty Name="Продажи" Relationship="Model.FK__Продажи__ID_плас__49C3F6B7" FromRole="Пластинки" ToRole="Продажи" />
+          <Property Name="Количество_зарезервировано" Type="Int32" />
         </EntityType>
         <Association Name="FK__Пластинки__Жанр___4D94879B">
           <End Type="Model.Жанры" Role="Жанры" Multiplicity="0..1" />
@@ -426,6 +428,7 @@
           <EntitySetMapping Name="Пластинки">
             <EntityTypeMapping TypeName="Model.Пластинки">
               <MappingFragment StoreEntitySet="Пластинки">
+                <ScalarProperty Name="Количество_зарезервировано" ColumnName="Количество зарезервировано" />
                 <ScalarProperty Name="Обложка" ColumnName="Обложка" />
                 <ScalarProperty Name="Количество" ColumnName="Количество" />
                 <ScalarProperty Name="Жанр_ID" ColumnName="Жанр_ID" />
