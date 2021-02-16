@@ -32,8 +32,8 @@ namespace Музыкальный_магазин_пластинок
             LogOut(new object(), new RoutedEventArgs());
             
             ///для теста
-            LoginBox.Text = "2";
-            PassworBox.Password = "2";
+            LoginBox.Text = "1";
+            PassworBox.Password = "1";
             Logon(new object(), new RoutedEventArgs());
         }
 

@@ -10,20 +10,36 @@ namespace Музыкальный_магазин_пластинок
     /// </summary>
     public partial class MainWindow : Window
     {
+       /// <summary>
+       /// Авторизация пользователя.
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void Logon(object sender, RoutedEventArgs e)
         {
+            ///
+            ///Скрываем весь интерфейс, кроме интерфейса для авторизации.
+            ///
             LogOut(sender, e);
+
+            ///
+            ///Проверяем поля логин/пароль на пустоту
+            ///
             if (LoginBox.Text == String.Empty)
             {
                 StatusLable.Content = "Не указан логин!";
                 return;
             }
-
+            ///
+            ///Ищем пользователя по логину
+            ///
             var User = магазин.Пользователи.FirstOrDefault<Пользователи>(s => s.Логин == LoginBox.Text);
             if (User != null)
             {
+                ///Проверяем пароль
                 if (User.Пароль == PassworBox.Password)
                 {
+                    ///Проверяем роль
                     switch (User.Роль)
                     {
                         case "admin":
@@ -69,6 +85,11 @@ namespace Музыкальный_магазин_пластинок
             }
         }
 
+        /// <summary>
+        /// Скрытие всего интерфейса кроме интерфейса авторизации.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LogOut(object sender, RoutedEventArgs e)
         {
             ///очищаем заполненные поля
@@ -93,12 +114,21 @@ namespace Музыкальный_магазин_пластинок
             LogonGrid.Visibility = Visibility.Visible;
         }
 
-
+        /// <summary>
+        /// Авторизация по нажатию Enter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PasswordEnter(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter) Logon(sender, new RoutedEventArgs());
         }
 
+        /// <summary>
+        /// Выход из программы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Exit(object sender, RoutedEventArgs e)
         {
             Close();

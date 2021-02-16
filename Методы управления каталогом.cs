@@ -24,9 +24,14 @@ namespace Музыкальный_магазин_пластинок
     public partial class MainWindow : Window
     {
        
+        /// <summary>
+        /// Поиск по полям жанр, исполнитель, название пластинки и вывод результатов в види трех списков.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Found_Singls(object sender, RoutedEventArgs e)
         {
-
+            магазин.SaveChanges();
             lbSearchSinglesResult.Items.Clear();
             магазин.Configuration.LazyLoadingEnabled = false;
             var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(tBoxSearchCatalog.Text));
@@ -34,7 +39,6 @@ namespace Музыкальный_магазин_пластинок
             {
                 lbSearchSinglesResult.Items.Add(pl.Название);
             }
-            магазин.SaveChanges();
             lbSearchArtistResult.Items.Clear();
             магазин.Configuration.LazyLoadingEnabled = false;
             var result_1 = магазин.Исполнители.Where<Исполнители>(s => s.Имя.Contains(tBoxSearchCatalog.Text));
@@ -49,9 +53,13 @@ namespace Музыкальный_магазин_пластинок
             {
                 lbSearchGenreResult.Items.Add(Art.Название);
             }
-
         }
 
+        /// <summary>
+        /// Поиск по нажатию Enter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Key_Enter(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -61,6 +69,11 @@ namespace Музыкальный_магазин_пластинок
             }
         }
 
+        /// <summary>
+        /// Поиск выбранной пластинки и отображение информации о ней.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChooseSingle(object sender, SelectionChangedEventArgs e)
         {
             if (lbSearchSinglesResult.SelectedIndex == -1) return;
@@ -75,6 +88,11 @@ namespace Музыкальный_магазин_пластинок
             CurientCover.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + CurientSingle.Обложка));
         }
 
+        /// <summary>
+        /// Поиск пластинок по выбранному исполнителю.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChooseSingles(object sender, SelectionChangedEventArgs e)
         {
             магазин.SaveChanges();
@@ -83,6 +101,12 @@ namespace Музыкальный_магазин_пластинок
             lbSearchGenreResult.Items.Clear();
             магазин.Configuration.LazyLoadingEnabled = false;
             var result = магазин.Пластинки.Where<Пластинки>(s => s.Исполнители.Имя.Contains(lbSearchArtistResult.SelectedItem.ToString()));
+            foreach (Пластинки pl in result)
+            {
+                магазин.Entry<Пластинки>(pl).Reference(s => s.Жанры).Load();
+                магазин.Entry<Пластинки>(pl).Reference(s => s.Издатели).Load();
+                магазин.Entry<Пластинки>(pl).Reference(s => s.Исполнители).Load();
+            }
             foreach (var pl in result)
             {
                 lbSearchSinglesResult.Items.Add(pl.Название);
@@ -90,6 +114,11 @@ namespace Музыкальный_магазин_пластинок
             }
 
         }
+        /// <summary>
+        /// Поиск пластинок и исполнителей по выбранному жанру.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         
         private void FindAllContentByGanre(object sender, SelectionChangedEventArgs e)
         {
@@ -99,6 +128,12 @@ namespace Музыкальный_магазин_пластинок
             lbSearchArtistResult.Items.Clear();
             магазин.Configuration.LazyLoadingEnabled = false;
             var result = магазин.Пластинки.Where<Пластинки>(s => s.Жанры.Название.Contains(lbSearchGenreResult.SelectedItem.ToString()));
+            foreach (Пластинки pl in result)
+            {
+                магазин.Entry<Пластинки>(pl).Reference(s => s.Жанры).Load();
+                магазин.Entry<Пластинки>(pl).Reference(s => s.Издатели).Load();
+                магазин.Entry<Пластинки>(pl).Reference(s => s.Исполнители).Load();
+            }
             foreach (var pl in result)
             {
                 lbSearchSinglesResult.Items.Add(pl.Название);
@@ -107,8 +142,7 @@ namespace Музыкальный_магазин_пластинок
             foreach (var pl in result)
             {
                 var result_1 = магазин.Исполнители.Where<Исполнители>(s => s.Имя.Contains(pl.Исполнители.Имя)).FirstOrDefault<Исполнители>();
-                lbSearchArtistResult.Items.Add(result_1.Имя);
-                
+                lbSearchArtistResult.Items.Add(result_1.Имя);               
             }
             
         }
