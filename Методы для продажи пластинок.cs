@@ -80,9 +80,21 @@ namespace Музыкальный_магазин_пластинок
             else
             {
                 //прописать логику обновления таблиц при продаже товара
-                StatusBar.Text = "Успешно";
-                SearchSinglToSale(new object(), new RoutedEventArgs());
+                Продажи newSale = new Продажи();
+                newSale.ID_пластинки = SalingSingle.Id;
+                //newSale.ID_покупателя  = добавить как будет готова логика выбора покупателя 
+                newSale.Дата_продажи = DateTime.Now;
+                newSale.Цена = SalingSingle.Цена;
+                int sellingAmount = 0;
+                Int32.TryParse(amount.Text, out sellingAmount);
+                SalingSingle.Количество = SalingSingle.Количество - sellingAmount;
+                магазин.Продажи.Add(newSale);
                 магазин.SaveChanges();
+                SalingSingle = new Пластинки();
+                SingleToSaleGrid.DataContext = SalingSingle;
+                StatusBar.Text = "Успешно";
+                tBoxSearchToSale.Text = String.Empty;
+                lbSearchResultToSale.Items.Clear();
             }
 
         }
