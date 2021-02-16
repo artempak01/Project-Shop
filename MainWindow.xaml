@@ -40,7 +40,7 @@
             <Label x:Name="StatusLable" Grid.ColumnSpan="2" Content="" HorizontalAlignment="Left" Margin="115,238,0,-4.785" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="254" Background="Transparent" Foreground="#FFFF0034"/>
         </Grid>
         <TabControl x:Name="MainTabControl" Margin="10,30,10,0" Height="392" VerticalAlignment="Top">
-            <TabItem x:Name="CatalogTabItem" Header="Каталог" Margin="2,0,-59,0" Width="92">
+            <TabItem x:Name="CatalogTabItem" Header="Каталог" Margin="2,0,-59,0" Width="92" LostFocus="ClearStatusBar">
                 <Grid x:Name="CatalogGrid" Background="#FFE5E5E5" Margin="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -100,7 +100,7 @@
                     <TextBlock HorizontalAlignment="Left" TextAlignment="Center" Margin="344.551,40,0,0" TextWrapping="Wrap" Text="Выберите пластинку"  VerticalAlignment="Top" Width="372"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="SaleTabItem" Header="Продажа" Background="#FFE5E5E5" Margin="509.5,0,-509.5,0" Width="92">
+            <TabItem x:Name="SaleTabItem" Header="Продажа" Background="#FFE5E5E5" Margin="509.5,0,-509.5,0" Width="92" LostFocus="ClearStatusBar">
                 <DockPanel Background="#FFE5E5E5" Margin="10">
                     <Grid DockPanel.Dock="Top" Margin="0,0,0,6" Height="30">
                         <TextBox x:Name="tBoxSearchToSale" Width="474" HorizontalAlignment="Left" Margin="5,2,0,2"/>
@@ -177,13 +177,13 @@
                     </DockPanel>
                 </DockPanel>
             </TabItem>
-            <TabItem x:Name="SalesTabItem" Header="Акции" Height="24" VerticalAlignment="Top" Margin="103.749,0,-103.749,0" Width="92">
+            <TabItem x:Name="SalesTabItem" Header="Акции" Height="24" VerticalAlignment="Top" Margin="103.749,0,-103.749,0" Width="92" LostFocus="ClearStatusBar">
                 <Grid Background="#FFE5E5E5" Margin="10"/>
             </TabItem>
-            <TabItem Header="Регистрация покупателя" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="147.973" Margin="140.66,0,-140.66,0">
+            <TabItem Header="Регистрация покупателя" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="147.973" Margin="140.66,0,-140.66,0" LostFocus="ClearStatusBar">
                 <Grid Background="#FFE5E5E5" Margin="10"/>
             </TabItem>
-            <TabItem Header="Отчеты" HorizontalAlignment="Right" Height="24" VerticalAlignment="Top" Width="92" Margin="-264.5,0,264.5,0">
+            <TabItem Header="Отчеты" HorizontalAlignment="Right" Height="24" VerticalAlignment="Top" Width="92" Margin="-264.5,0,264.5,0" LostFocus="ClearStatusBar">
                 <Grid Background="#FFE5E5E5" Margin="10"/>
             </TabItem>
         </TabControl>

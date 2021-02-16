@@ -30,7 +30,7 @@ namespace Музыкальный_магазин_пластинок
         public virtual DbSet<Исполнители> Исполнители { get; set; }
         public virtual DbSet<Покупатели> Покупатели { get; set; }
         public virtual DbSet<Пользователи> Пользователи { get; set; }
-        public virtual DbSet<Продажи> Продажи { get; set; }
         public virtual DbSet<Пластинки> Пластинки { get; set; }
+        public virtual DbSet<Продажи> Продажи { get; set; }
     }
 }

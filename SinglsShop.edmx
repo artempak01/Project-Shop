@@ -73,6 +73,7 @@
           <Property Name="Цена" Type="money" />
           <Property Name="ID_пластинки" Type="int" />
           <Property Name="ID_покупателя" Type="int" />
+          <Property Name="Количество" Type="int" />
         </EntityType>
         <Association Name="FK__Пластинки__ID_за__4AB81AF0">
           <End Role="Покупатели" Type="Self.Покупатели" Multiplicity="0..1" />
@@ -215,8 +216,8 @@
           <Property Name="Фамилия" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Имя" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Сумма_покупок" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="Продажи" Relationship="Self.FK__Продажи__ID_поку__33D4B598" FromRole="Покупатели" ToRole="Продажи" />
           <NavigationProperty Name="Пластинки" Relationship="Model.FK__Пластинки__ID_за__4AB81AF0" FromRole="Покупатели" ToRole="Пластинки" />
+          <NavigationProperty Name="Продажи" Relationship="Model.FK__Продажи__ID_поку__33D4B598" FromRole="Покупатели" ToRole="Продажи" />
         </EntityType>
         <EntityType Name="Пользователи">
           <Key>
@@ -229,41 +230,12 @@
           <Property Name="Имя" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Фамилия" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Продажи">
-          <Key>
-            <PropertyRef Name="Order_ID" />
-          </Key>
-          <Property Name="Order_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Дата_продажи" Type="DateTime" Precision="0" />
-          <Property Name="Цена" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ID_пластинки" Type="Int32" />
-          <Property Name="ID_покупателя" Type="Int32" />
-          <NavigationProperty Name="Покупатели" Relationship="Self.FK__Продажи__ID_поку__33D4B598" FromRole="Продажи" ToRole="Покупатели" />
-          <NavigationProperty Name="Пластинки" Relationship="Model.FK__Продажи__ID_плас__49C3F6B7" FromRole="Продажи" ToRole="Пластинки" />
-        </EntityType>
-        <Association Name="FK__Продажи__ID_поку__33D4B598">
-          <End Role="Покупатели" Type="Self.Покупатели" Multiplicity="0..1" />
-          <End Role="Продажи" Type="Self.Продажи" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Покупатели">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Продажи">
-              <PropertyRef Name="ID_покупателя" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="Магазин_пластинок_" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Жанры" EntityType="Self.Жанры" />
           <EntitySet Name="Издатели" EntityType="Self.Издатели" />
           <EntitySet Name="Исполнители" EntityType="Self.Исполнители" />
           <EntitySet Name="Покупатели" EntityType="Self.Покупатели" />
           <EntitySet Name="Пользователи" EntityType="Self.Пользователи" />
-          <EntitySet Name="Продажи" EntityType="Self.Продажи" />
-          <AssociationSet Name="FK__Продажи__ID_поку__33D4B598" Association="Self.FK__Продажи__ID_поку__33D4B598">
-            <End Role="Покупатели" EntitySet="Покупатели" />
-            <End Role="Продажи" EntitySet="Продажи" />
-          </AssociationSet>
           <EntitySet Name="Пластинки" EntityType="Model.Пластинки" />
           <AssociationSet Name="FK__Пластинки__Жанр___4D94879B" Association="Model.FK__Пластинки__Жанр___4D94879B">
             <End Role="Жанры" EntitySet="Жанры" />
@@ -281,8 +253,13 @@
             <End Role="Покупатели" EntitySet="Покупатели" />
             <End Role="Пластинки" EntitySet="Пластинки" />
           </AssociationSet>
+          <EntitySet Name="Продажи" EntityType="Model.Продажи" />
           <AssociationSet Name="FK__Продажи__ID_плас__49C3F6B7" Association="Model.FK__Продажи__ID_плас__49C3F6B7">
             <End Role="Пластинки" EntitySet="Пластинки" />
+            <End Role="Продажи" EntitySet="Продажи" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Продажи__ID_поку__33D4B598" Association="Model.FK__Продажи__ID_поку__33D4B598">
+            <End Role="Покупатели" EntitySet="Покупатели" />
             <End Role="Продажи" EntitySet="Продажи" />
           </AssociationSet>
         </EntityContainer>
@@ -357,6 +334,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Продажи">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Дата_продажи" Type="DateTime" Precision="0" />
+          <Property Name="Цена" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ID_пластинки" Type="Int32" />
+          <Property Name="ID_покупателя" Type="Int32" />
+          <Property Name="Количество" Type="Int32" />
+          <NavigationProperty Name="Пластинки" Relationship="Model.FK__Продажи__ID_плас__49C3F6B7" FromRole="Продажи" ToRole="Пластинки" />
+          <NavigationProperty Name="Покупатели" Relationship="Model.FK__Продажи__ID_поку__33D4B598" FromRole="Продажи" ToRole="Покупатели" />
+        </EntityType>
         <Association Name="FK__Продажи__ID_плас__49C3F6B7">
           <End Type="Model.Пластинки" Role="Пластинки" Multiplicity="0..1" />
           <End Type="Model.Продажи" Role="Продажи" Multiplicity="*" />
@@ -366,6 +356,18 @@
             </Principal>
             <Dependent Role="Продажи">
               <PropertyRef Name="ID_пластинки" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Продажи__ID_поку__33D4B598">
+          <End Type="Model.Покупатели" Role="Покупатели" Multiplicity="0..1" />
+          <End Type="Model.Продажи" Role="Продажи" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Покупатели">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Продажи">
+              <PropertyRef Name="ID_покупателя" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -421,17 +423,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Продажи">
-            <EntityTypeMapping TypeName="Model.Продажи">
-              <MappingFragment StoreEntitySet="Продажи">
-                <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
-                <ScalarProperty Name="Дата_продажи" ColumnName="Дата_продажи" />
-                <ScalarProperty Name="Цена" ColumnName="Цена" />
-                <ScalarProperty Name="ID_пластинки" ColumnName="ID_пластинки" />
-                <ScalarProperty Name="ID_покупателя" ColumnName="ID_покупателя" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Пластинки">
             <EntityTypeMapping TypeName="Model.Пластинки">
               <MappingFragment StoreEntitySet="Пластинки">
@@ -448,6 +439,18 @@
                 <ScalarProperty Name="Год_издания" ColumnName="Год издания" />
                 <ScalarProperty Name="Название" ColumnName="Название" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Продажи">
+            <EntityTypeMapping TypeName="Model.Продажи">
+              <MappingFragment StoreEntitySet="Продажи">
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="ID_покупателя" ColumnName="ID_покупателя" />
+                <ScalarProperty Name="ID_пластинки" ColumnName="ID_пластинки" />
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+                <ScalarProperty Name="Дата_продажи" ColumnName="Дата_продажи" />
+                <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

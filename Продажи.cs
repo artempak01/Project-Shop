@@ -19,8 +19,9 @@ namespace Музыкальный_магазин_пластинок
         public Nullable<decimal> Цена { get; set; }
         public Nullable<int> ID_пластинки { get; set; }
         public Nullable<int> ID_покупателя { get; set; }
+        public Nullable<int> Количество { get; set; }
     
-        public virtual Покупатели Покупатели { get; set; }
         public virtual Пластинки Пластинки { get; set; }
+        public virtual Покупатели Покупатели { get; set; }
     }
 }

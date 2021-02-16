@@ -35,7 +35,12 @@ namespace Музыкальный_магазин_пластинок
             LoginBox.Text = "1";
             PassworBox.Password = "1";
             Logon(new object(), new RoutedEventArgs());
-        }       
+        }
+
+        private void ClearStatusBar(object sender, RoutedEventArgs e)
+        {
+            StatusBar.Text = String.Empty;
+        }
     }
 
 }

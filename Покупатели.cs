@@ -17,8 +17,8 @@ namespace Музыкальный_магазин_пластинок
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Покупатели()
         {
-            this.Продажи = new HashSet<Продажи>();
             this.Пластинки = new HashSet<Пластинки>();
+            this.Продажи = new HashSet<Продажи>();
         }
     
         public int Id { get; set; }
@@ -27,8 +27,8 @@ namespace Музыкальный_магазин_пластинок
         public Nullable<decimal> Сумма_покупок { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Продажи> Продажи { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Пластинки> Пластинки { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Продажи> Продажи { get; set; }
     }
 }

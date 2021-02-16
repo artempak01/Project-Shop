@@ -13,12 +13,12 @@ namespace Музыкальный_магазин_пластинок
     /// </summary>
     public partial class MainWindow : Window
     {
-       /// <summary>
-       /// Поиск всех пластинок для продажи
-       /// </summary>
-       /// <param name="sender"></param>
-       /// <param name="e"></param>
-             
+        /// <summary>
+        /// Поиск всех пластинок для продажи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         private void SearchSinglToSale(object sender, RoutedEventArgs e)
         {
             lbSearchResultToSale.Items.Clear();
@@ -53,13 +53,13 @@ namespace Музыкальный_магазин_пластинок
             foreach (var customer in магазин.Покупатели) CustomersList.Items.Add(customer.Фамилия + " " + customer.Имя);
             SellingCover.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + SalingSingle.Обложка));
         }
-       
+
         /// <summary>
-       /// Продажа пластинки: списание в базе, занесение в таблицу продажи и Покупатели данных о сделке
-       /// </summary>
-       /// <param name="sender"></param>
-       /// <param name="e"></param>
-        
+        /// Продажа пластинки: списание в базе, занесение в таблицу продажи и Покупатели данных о сделке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         private void SaleSingle(object sender, RoutedEventArgs e)
         {
             if (SalingSingle == null || amount.Text == String.Empty)
@@ -72,26 +72,28 @@ namespace Музыкальный_магазин_пластинок
             Int32.TryParse(amount.Text, out q);
             Int32.TryParse(inStock.Text, out g);
             int t = g - q;
-            if (t < 0)
+            if (t < 0 && q !=0)
             {
                 StatusBar.Text = "Укажите корректное количество для продажи";
                 return;
             }
             else
             {
-                //прописать логику обновления таблиц при продаже товара
+                int sellingAmount = 0;
+                Int32.TryParse(amount.Text, out sellingAmount);
                 Продажи newSale = new Продажи();
                 newSale.ID_пластинки = SalingSingle.Id;
                 //newSale.ID_покупателя  = добавить как будет готова логика выбора покупателя 
                 newSale.Дата_продажи = DateTime.Now;
                 newSale.Цена = SalingSingle.Цена;
-                int sellingAmount = 0;
-                Int32.TryParse(amount.Text, out sellingAmount);
+                newSale.Количество = sellingAmount;
                 SalingSingle.Количество = SalingSingle.Количество - sellingAmount;
                 магазин.Продажи.Add(newSale);
                 магазин.SaveChanges();
                 SalingSingle = new Пластинки();
                 SingleToSaleGrid.DataContext = SalingSingle;
+                SellingCover.Source = null;
+                amount.Text = String.Empty;
                 StatusBar.Text = "Успешно";
                 tBoxSearchToSale.Text = String.Empty;
                 lbSearchResultToSale.Items.Clear();
