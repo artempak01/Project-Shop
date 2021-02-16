@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Музыкальный_магазин_пластинок"
         mc:Ignorable="d"
-        Title="Управление магазином пластинок" Height="484" Width="769" Icon="картинка.png">
+        Title="Управление магазином пластинок" Height="506.5" Width="769" Icon="картинка.png">
     <Window.Resources>
         <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\artem.pak01\source\repos\Музыкальный магазин пластинок\bin\debug\default.jpg"/>
     </Window.Resources>
@@ -39,7 +39,7 @@
             <Button x:Name="logonBtn" Content="Войти" Click="Logon"  Margin="176,173,90.592,19.216" Cursor="Arrow" ClickMode="Press"/>
             <Label x:Name="StatusLable" Grid.ColumnSpan="2" Content="" HorizontalAlignment="Left" Margin="115,238,0,-4.785" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="254" Background="Transparent" Foreground="#FFFF0034"/>
         </Grid>
-        <TabControl x:Name="MainTabControl" Margin="10,30,10,0" Height="392" VerticalAlignment="Top">
+        <TabControl x:Name="MainTabControl" Margin="10,30,10,-32" Height="432" VerticalAlignment="Top">
             <TabItem x:Name="CatalogTabItem" Header="Каталог" Margin="2,0,-59,0" Width="92" LostFocus="ClearStatusBar">
                 <Grid x:Name="CatalogGrid" Background="#FFE5E5E5" Margin="10">
                     <Grid.ColumnDefinitions>
@@ -103,7 +103,7 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="SaleTabItem" Header="Продажа" Background="#FFE5E5E5" Margin="509.5,0,-509.5,0" Width="92" LostFocus="ClearStatusBar">
-                <DockPanel Background="#FFE5E5E5" Margin="10">
+                <DockPanel Background="#FFE5E5E5" Margin="10,10,10,23.5">
                     <Grid DockPanel.Dock="Top" Margin="0,0,0,6" Height="30">
                         <TextBox x:Name="tBoxSearchToSale" Width="474" HorizontalAlignment="Left" Margin="5,2,0,2"/>
                         <Button Width="135" Content="Найти" HorizontalAlignment="Right" Margin="5,2" Click="SearchSinglToSale">
@@ -174,7 +174,11 @@
                             <ComboBox x:Name="CustomersList" Margin="10,2" />
                         </Grid>
                         <Grid DockPanel.Dock="Bottom" Height="26" Width="398">
-                            <TextBlock Text="Выберите клиента, если он зарегистрирован в системе" Margin="48,0,47,0" Height="21" VerticalAlignment="Top"/>
+                            <TextBlock Text="Выберите клиента, если он зарегистрирован в системе" Margin="48,5,47,5" Height="21" VerticalAlignment="Top"/>
+                        </Grid>
+                        <Grid Height="30" Margin="0,5">
+                            <TextBox x:Name="tBoxSearchCustomer" HorizontalAlignment="Left" Width="392" Margin="0,2"/>
+                            <Button HorizontalAlignment="Right" Content="Найти покупателя" Width="114.103" Margin="0,2" Click="FoundCustomers"/>
                         </Grid>
                     </DockPanel>
                 </DockPanel>
@@ -189,6 +193,6 @@
                 <Grid Background="#FFE5E5E5" Margin="10"/>
             </TabItem>
         </TabControl>
-        <TextBlock x:Name="StatusBar" Foreground="Red" HorizontalAlignment="Left" Margin="10,427,0,-15" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="20" Width="725"/>
+        <TextBlock x:Name="StatusBar" Foreground="Red" HorizontalAlignment="Left" Margin="10,437.5,0,-32" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24.5" Width="725"/>
     </Grid>
 </Window>

@@ -47,10 +47,7 @@ namespace Музыкальный_магазин_пластинок
             магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Издатели).Load();
             магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Исполнители).Load();
             SingleToSaleGrid.DataContext = SalingSingle;
-            CustomersList.Items.Clear();
-            CustomersList.Items.Add("--клиент не зарегистрирован--");
-            CustomersList.SelectedIndex = 0;
-            foreach (var customer in магазин.Покупатели) CustomersList.Items.Add(customer.Фамилия + " " + customer.Имя);
+
             SellingCover.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + SalingSingle.Обложка));
         }
 
@@ -72,7 +69,7 @@ namespace Музыкальный_магазин_пластинок
             Int32.TryParse(amount.Text, out q);
             Int32.TryParse(inStock.Text, out g);
             int t = g - q;
-            if (t < 0 && q !=0)
+            if (t < 0 && q != 0)
             {
                 StatusBar.Text = "Укажите корректное количество для продажи";
                 return;
@@ -83,7 +80,11 @@ namespace Музыкальный_магазин_пластинок
                 Int32.TryParse(amount.Text, out sellingAmount);
                 Продажи newSale = new Продажи();
                 newSale.ID_пластинки = SalingSingle.Id;
-                //newSale.ID_покупателя  = добавить как будет готова логика выбора покупателя 
+                if (!CustomersList.SelectedItem.ToString().Equals("--клиент не зарегистрирован--"))
+                {
+                    var Customer = магазин.Покупатели.Where<Покупатели>(S => (S.Фамилия + " " + S.Имя).Equals(CustomersList.SelectedItem.ToString())).FirstOrDefault<Покупатели>();
+                    newSale.ID_покупателя = Customer.Id;
+                }
                 newSale.Дата_продажи = DateTime.Now;
                 newSale.Цена = SalingSingle.Цена;
                 newSale.Количество = sellingAmount;
@@ -99,6 +100,17 @@ namespace Музыкальный_магазин_пластинок
                 lbSearchResultToSale.Items.Clear();
             }
 
+        }
+
+        private void FoundCustomers(object sender, RoutedEventArgs e)
+        {
+            CustomersList.Items.Clear();
+            CustomersList.Items.Add("--клиент не зарегистрирован--");
+            CustomersList.SelectedIndex = 0;
+            foreach (var customer in магазин.Покупатели.Where<Покупатели>(s => s.Имя.Contains(tBoxSearchCustomer.Text) || s.Фамилия.Contains(tBoxSearchCustomer.Text)))
+            {
+                CustomersList.Items.Add(customer.Фамилия + " " + customer.Имя);
+            }
         }
     }
 }
