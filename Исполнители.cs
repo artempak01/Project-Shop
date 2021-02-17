@@ -25,5 +25,9 @@ namespace Музыкальный_магазин_пластинок
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Пластинки> Пластинки { get; set; }
+        public override string ToString()
+        {
+            return Имя;
+        }
     }
 }

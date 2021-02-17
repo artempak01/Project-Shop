@@ -164,7 +164,7 @@
                             </Grid>
                             <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="В наличии" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-                                <TextBox x:Name="inStock" TextAlignment="Center" Text="{Binding Количество, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="18"/>
+                                <TextBox x:Name="inStock" TextAlignment="Center" Text="{Binding Количество, Mode=Default, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="18"/>
                                 <TextBlock Text="К продаже" TextAlignment="Center" TextWrapping="Wrap" Margin="0,5"/>
                                 <TextBox x:Name="amount" TextAlignment="Center" Width="18"/>
                             </StackPanel>
@@ -192,7 +192,7 @@
             <TabItem x:Name="SalesTabItem" Header="Акции" LostFocus="ClearStatusBar">
                 <Grid Background="#FFE5E5E5" Margin="10"/>
             </TabItem>
-            <TabItem x:Name="SalesResultsTabItem" Header="Отчеты" LostFocus="ClearStatusBar">
+            <TabItem x:Name="SalesResultsTabItem" Header="Отчеты" LostFocus="ClearStatusBar" ClipToBounds="True">
                 <StackPanel Background="#FFE5E5E5" Margin="0,0,1,20">
                     <DockPanel Margin="10">
                         <TextBlock HorizontalAlignment="Center" Margin="10,10" Text="Выбирите тип отчета и при необходимости период " DockPanel.Dock="Top"/>
@@ -202,18 +202,18 @@
                             <ComboBoxItem Content="Самые популярные авторы"/>
                             <ComboBoxItem Content="Самые популярные жанры"/>
                         </ComboBox>
-                        <DockPanel DockPanel.Dock="Right" Height="27" Width="404" >
+                        <DockPanel DockPanel.Dock="Right" Height="26" Width="395" >
                             <DatePicker Name="StartDate"/>
                             <DatePicker Name="EndDate"/>
-                            <Button Content="Софрмировать отчет" Width="150" Click="Button_Click"/>
+                            <Button Content="Сформировать отчет" Width="133" Click="CreateReport"/>
                         </DockPanel>
                     </DockPanel>
-                    <DataGrid x:Name="ReportView" Height="262" Margin="10,10,10,10">
-                        
+                    <DataGrid x:Name="ReportView" HorizontalAlignment="Center" Width="680" Height="262" IsReadOnly="True">
+
                     </DataGrid>
                 </StackPanel>
             </TabItem>
         </TabControl>
-        <TextBlock x:Name="StatusBar" Foreground="Red" HorizontalAlignment="Left" Margin="10,438,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="739"/>
+        <TextBlock x:Name="StatusBar" Foreground="Red" HorizontalAlignment="Left" Margin="25,438,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="695"/>
     </Grid>
 </Window>
