@@ -13,7 +13,7 @@
                 <ColumnDefinition Width="289*"/>
                 <ColumnDefinition Width="115*"/>
             </Grid.ColumnDefinitions>
-            <Image x:Name="CurientCover" Grid.ColumnSpan="1" Margin="5" />
+            <Image x:Name="CurientCover" Grid.ColumnSpan="1" Margin="5" MouseDown="EditCover" />
             <Grid x:Name="SingleInfo" Grid.Column="1" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -31,7 +31,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Название"/>
-                <TextBox Text="{Binding Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+                <TextBox x:Name="SingleName" Text="{Binding Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
                 <TextBlock Text="Исполнитель" Grid.Row="1"/>
                 <ComboBox x:Name="cbArtists" Grid.Column="1" Grid.Row="1" LostFocus="EditArtist" IsEditable="True"/>
                 <TextBlock Text="Жанр" Grid.Row="2"/>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -146,6 +147,29 @@ namespace Музыкальный_магазин_пластинок
         private void CloseEditWindow(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void EditCover(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (SingleName.Text == string.Empty || cbArtists.Text == string.Empty)
+                {
+                    StatusBar.Text = "Сначала нужно заполнить название пластинки и исполнителя";
+                    return;
+                }
+                var open = new OpenFileDialog();
+                open.ShowDialog();
+                string puth = open.FileName;
+                if (EditingSingle.Обложка.Equals($"{cbArtists.Text} - {SingleName.Text}.jpg") || EditingSingle.Обложка.Equals(open.SafeFileName)) return;
+                EditingSingle.Обложка = $"{cbArtists.Text} - {SingleName.Text}.jpg";
+                open.Reset();
+                File.Copy(puth, $"{cbArtists.Text} - {SingleName.Text}.jpg",true);
+            }
+            catch (Exception ex)
+            {
+                StatusBar.Text = ex.Message;
+            }
         }
     }
 }
