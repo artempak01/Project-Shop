@@ -40,7 +40,7 @@
             <Label x:Name="StatusLable" Grid.ColumnSpan="2" Content="" HorizontalAlignment="Left" Margin="115,238,0,-4.785" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="254" Background="Transparent" Foreground="#FFFF0034"/>
         </Grid>
         <TabControl x:Name="MainTabControl" Margin="10,30,10,-32" Height="432" VerticalAlignment="Top">
-            <TabItem x:Name="CatalogTabItem" Header="Каталог" LostFocus="ClearStatusBar">
+            <TabItem x:Name="CatalogTabItem" Header="Каталог">
                 <Grid x:Name="CatalogGrid" Background="#FFE5E5E5" Margin="10,10,10,32">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -74,11 +74,11 @@
                             <TextBlock Text="Название"/>
                             <TextBox Text="{Binding Path=Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
                             <TextBlock Text="Исполнитель" Grid.Row="1"/>
-                            <TextBox Text="{Binding Path=Исполнители.Имя,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
+                            <TextBox Text="{Binding Path=Исполнители.Имя,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" IsReadOnly="True"/>
                             <TextBlock Text="Жанр" Grid.Row="2"/>
-                            <TextBox Text="{Binding Path=Жанры.Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/>
+                            <TextBox Text="{Binding Path=Жанры.Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2" IsReadOnly="True"/>
                             <TextBlock Text="Издатель" Grid.Row="3"/>
-                            <TextBox Text="{Binding Path=Издатели.Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
+                            <TextBox Text="{Binding Path=Издатели.Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" IsReadOnly="True"/>
                             <TextBlock Text="Год издания" Grid.Row="4"/>
                             <TextBox Text="{Binding Path=Год_издания, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
                             <TextBlock Text="Количество треков" Grid.Row="5"/>
@@ -104,7 +104,7 @@
                     <ListBox x:Name="lbSearchGenreResult" HorizontalAlignment="Left" Height="90" Margin="256.051,65,0,0" VerticalAlignment="Top" Width="192" SelectionChanged="FindAllContentByGanre"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="SaleTabItem" Header="Продажа" Background="#FFE5E5E5" LostFocus="ClearStatusBar">
+            <TabItem x:Name="SaleTabItem" Header="Продажа" Background="#FFE5E5E5">
                 <DockPanel Background="#FFE5E5E5" Margin="10,10,10,23.5">
                     <Grid DockPanel.Dock="Top" Margin="0,0,0,6" Height="30">
                         <TextBox x:Name="tBoxSearchToSale" Width="474" HorizontalAlignment="Left" Margin="5,6,0,6"/>
@@ -189,10 +189,45 @@
                     </DockPanel>
                 </DockPanel>
             </TabItem>
-            <TabItem x:Name="SalesTabItem" Header="Акции" LostFocus="ClearStatusBar">
-                <Grid Background="#FFE5E5E5" Margin="10"/>
+            <TabItem x:Name="SalesTabItem" Header="Акции">
+                <Grid Background="#FFE5E5E5" Margin="10,13,10,7">
+                    <StackPanel Margin="10" Orientation="Vertical">
+                        <Grid Height="100.96">
+                            <TextBlock Text="Выбирите категорию для применения скидки" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Width="256" Margin="10,0,0,0"/>
+                            <ComboBox Name="cbCategoryTypes" HorizontalAlignment="Left" Margin="307.203,0,0,0" VerticalAlignment="Top" Width="175.797">
+                                <ComboBoxItem Content="Исполнители"/>
+                                <ComboBoxItem Content="Жанры"/>
+                            </ComboBox>
+                            <Button Content="Применить" HorizontalAlignment="Left" Margin="510,58.96,0,0" VerticalAlignment="Top" Width="75" Click="Add_Sales"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="473,63,0,0" TextWrapping="Wrap" Text="%" VerticalAlignment="Top"/>
+                            <TextBox x:Name="tbSearchCategoryItems" HorizontalAlignment="Left" Height="23" Margin="307.203,26.96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175.797"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="10,27.96,0,0" TextWrapping="Wrap" Text="Введите текст для поиска по категории:" VerticalAlignment="Top"/>
+                            <Button Content="Найти" HorizontalAlignment="Left" Margin="510,28.97,0,0" VerticalAlignment="Top" Width="75" Click="Found_CategoryItems"/>
+                            <ComboBox Name="cbCategoryList" HorizontalAlignment="Left" Margin="184.203,60.96,0,0" VerticalAlignment="Top" Width="175.797"/>
+                            <ComboBox x:Name="cbSalesAmount" HorizontalAlignment="Left" Margin="393,59,0,0" VerticalAlignment="Top" Width="59">
+                                <ComboBoxItem Content="5"/>
+                                <ComboBoxItem Content="10"/>
+                                <ComboBoxItem Content="15"/>
+                                <ComboBoxItem Content="20"/>
+                                <ComboBoxItem Content="25"/>
+                                <ComboBoxItem Content="30"/>
+                                <ComboBoxItem Content="50"/>
+
+                            </ComboBox>
+                            <TextBlock HorizontalAlignment="Left" Margin="10,62.96,0,0" TextWrapping="Wrap" Text="Выбирите наименование:" VerticalAlignment="Top"/>
+                        </Grid>
+                        <Grid Height="85.96" VerticalAlignment="Top" HorizontalAlignment="Right" Width="693">
+                            <ComboBox Name="cbSearhingContentResult" HorizontalAlignment="Left" Margin="312,57.96,0,0" VerticalAlignment="Top" Width="170.797" SelectionChanged="ChooseSingleToAddSale"/>
+                            <TextBlock Text="или введите название пластинки для поиска и установки скидки вручную" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Margin="10,10,0,0" Height="37" Width="253.797"/>
+                            <TextBox x:Name="tbSearchText" HorizontalAlignment="Left" Height="23" Margin="312,20.96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170.797"/>
+                            <Button x:Name="tbSearchContent" Content="Найти" HorizontalAlignment="Left" Margin="511,20.96,0,0" VerticalAlignment="Top" Width="75" Click="SearchSinglesToAddSales"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="10,60,0,0" TextWrapping="Wrap" Text="Выбирите наименование:" VerticalAlignment="Top"/>
+                        </Grid>
+                        <DataGrid x:Name="gvSearchingResalt" HorizontalAlignment="Left" Height="177" VerticalAlignment="Top" Width="693"/>
+                    </StackPanel>
+                </Grid>
             </TabItem>
-            <TabItem x:Name="SalesResultsTabItem" Header="Отчеты" LostFocus="ClearStatusBar" ClipToBounds="True">
+            <TabItem x:Name="SalesResultsTabItem" Header="Отчеты" ClipToBounds="True">
                 <StackPanel Background="#FFE5E5E5" Margin="0,0,1,20">
                     <DockPanel Margin="10">
                         <TextBlock HorizontalAlignment="Center" Margin="10,10" Text="Выбирите тип отчета и при необходимости период " DockPanel.Dock="Top"/>
