@@ -68,6 +68,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EditSingleWindow.xaml.cs">
+      <DependentUpon>EditSingleWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TopSinglesReport.cs" />
     <Compile Include="Методы авторизации.cs" />
     <Compile Include="Методы для продажи пластинок.cs" />
@@ -109,6 +112,10 @@
     <Compile Include="Продажи.cs">
       <DependentUpon>SinglsShop.tt</DependentUpon>
     </Compile>
+    <Page Include="EditSingleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

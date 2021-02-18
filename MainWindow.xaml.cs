@@ -169,5 +169,12 @@ namespace Музыкальный_магазин_пластинок
                 StatusBar.Text = ex.Message;
             }
         }
+
+        private void EditSingle(object sender, RoutedEventArgs e)
+        {
+            EditSingleWindow edit = new EditSingleWindow(CurientSingle);
+            
+            edit.ShowDialog();
+        }
     }
 }
