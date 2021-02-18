@@ -91,5 +91,77 @@ namespace Музыкальный_магазин_пластинок
 
             }
         }
+
+        private void EditGanre(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var Ganre_ID = (from a in магазин.Жанры
+                                 where a.Название == cbGanres.Text
+                                 select a.Id).FirstOrDefault();
+                if (Ganre_ID == 0)
+                {
+                    магазин.Жанры.Add(new Жанры { Название = cbGanres.Text });
+                    магазин.SaveChanges();
+                    EditingSingle.Жанр_ID = (from a in магазин.Жанры
+                                             where a.Название == cbGanres.Text
+                                             select a.Id).FirstOrDefault();
+                }
+                else
+                {
+                    EditingSingle.Жанр_ID = Ganre_ID;
+
+                }
+                StatusBar.Text = String.Empty;
+            }
+            catch (Exception ex)
+            {
+                StatusBar.Text = ex.Message;
+
+            }
+        }
+
+        private void EditPublisher(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var Publisher_ID = (from a in магазин.Издатели
+                                where a.Название == cbPublichers.Text
+                                select a.Id).FirstOrDefault();
+                if (Publisher_ID == 0)
+                {
+                    магазин.Издатели.Add(new Издатели {  Название = cbPublichers.Text });
+                    магазин.SaveChanges();
+                    EditingSingle.Издатель_ID = (from a in магазин.Издатели
+                                                 where a.Название == cbPublichers.Text
+                                             select a.Id).FirstOrDefault();
+                }
+                else
+                {
+                    EditingSingle.Издатель_ID = Publisher_ID;
+
+                }
+                StatusBar.Text = String.Empty;
+            }
+            catch (Exception ex)
+            {
+                StatusBar.Text = ex.Message;
+
+            }
+        }
+
+        private void SaveChanges(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                магазин.SaveChanges();
+                StatusBar.Text = "Пластинка изменена";
+            }
+            catch (Exception ex)
+            {
+                StatusBar.Text = ex.Message;
+
+            }
+        }
     }
 }

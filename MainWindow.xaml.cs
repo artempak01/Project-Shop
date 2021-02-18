@@ -172,6 +172,11 @@ namespace Музыкальный_магазин_пластинок
 
         private void EditSingle(object sender, RoutedEventArgs e)
         {
+            if(CurientSingle.Название==null)
+            {
+                StatusBar.Text = "Выбирите пластинку для редактирования";
+                return;
+            }
             EditSingleWindow edit = new EditSingleWindow(CurientSingle);
             
             edit.ShowDialog();
