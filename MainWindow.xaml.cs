@@ -117,6 +117,7 @@ namespace Музыкальный_магазин_пластинок
                             res.Скидка = i;
                         }
                         магазин.SaveChanges();
+                        StatusBar.Text = "Скидки сохранены.";
                         break;
                     case "Жанры":
                         var result_1 = магазин.Пластинки.Where<Пластинки>(s => s.Жанры.Название.Contains(cbCategoryList.Text));
@@ -127,6 +128,7 @@ namespace Музыкальный_магазин_пластинок
                             res.Скидка = i;
                         }
                         магазин.SaveChanges();
+                        StatusBar.Text = "Скидки сохранены.";
                         break;
                 }
             }

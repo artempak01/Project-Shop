@@ -163,5 +163,10 @@ namespace Музыкальный_магазин_пластинок
 
             }
         }
+
+        private void CloseEditWindow(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
