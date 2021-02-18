@@ -2,20 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Музыкальный_магазин_пластинок
 {
@@ -149,7 +138,6 @@ namespace Музыкальный_магазин_пластинок
             report.Columns.Where(s => s.Header.Equals("Год_издания")).FirstOrDefault().Header = "Год издания";
             report.Columns.Remove(report.Columns.Where(s => s.Header.Equals("Id")).FirstOrDefault());
             report.Columns.Remove(report.Columns.Where(s => s.Header.Equals("Себестоимость")).FirstOrDefault());
-            //report.Columns.Remove(report.Columns.Where(s => s.Header.Equals("Скидка")).FirstOrDefault());
             report.Columns.Remove(report.Columns.Where(s => s.Header.Equals("ID_зарезервировавшего")).FirstOrDefault());
             report.Columns.Remove(report.Columns.Where(s => s.Header.Equals("Испольнитель_ID")).FirstOrDefault());
             report.Columns.Remove(report.Columns.Where(s => s.Header.Equals("Издатель_ID")).FirstOrDefault());
@@ -158,7 +146,6 @@ namespace Музыкальный_магазин_пластинок
             report.Columns.Remove(report.Columns.Where(s => s.Header.Equals("Количество_зарезервировано")).FirstOrDefault());
             report.Columns.Remove(report.Columns.Where(s => s.Header.Equals("Покупатели")).FirstOrDefault());
             report.Columns.Remove(report.Columns.Where(s => s.Header.Equals("Продажи")).FirstOrDefault());
-
         }
 
         int SortReport(TopSinglesReport FirstReportItem, TopSinglesReport SecondReportItem)

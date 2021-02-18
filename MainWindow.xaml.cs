@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Музыкальный_магазин_пластинок
 {
@@ -26,7 +17,7 @@ namespace Музыкальный_магазин_пластинок
         Пластинки CurientSingle = new Пластинки();
         Пластинки SalingSingle = new Пластинки();
         Магазин_пластинок_ магазин = new Магазин_пластинок_();
-
+        Пластинки EditSaleSingle = new Пластинки();
         public MainWindow()
         {
             InitializeComponent();
@@ -43,10 +34,10 @@ namespace Музыкальный_магазин_пластинок
 
         }
 
-        //private void ClearStatusBar(object sender, RoutedEventArgs e)
-        //{
-        //    StatusBar.Text = String.Empty;
-        //}
+        private void ClearStatusBar(object sender, RoutedEventArgs e)
+        {
+            StatusBar.Text = String.Empty;
+        }
 
         private void Found_CategoryItems(object sender, RoutedEventArgs e)
         {
@@ -54,7 +45,7 @@ namespace Музыкальный_магазин_пластинок
             {
                 if (cbCategoryTypes.SelectedIndex == -1)
                 {
-                    StatusBar.Text = "Выбирите категорию";
+                    StatusBar.Text = "Выберите категорию";
                     return;
                 }
                 cbCategoryList.ItemsSource = null;
@@ -90,20 +81,21 @@ namespace Музыкальный_магазин_пластинок
 
         private void Add_Sales(object sender, RoutedEventArgs e)
         {
-            try {
+            try
+            {
                 if (cbCategoryTypes.SelectedIndex == -1)
                 {
-                    StatusBar.Text = "Выбирите категорию";
+                    StatusBar.Text = "Выберите категорию";
                     return;
                 }
                 else if (cbCategoryList.SelectedIndex == -1)
                 {
-                    StatusBar.Text = "Выбирите наименование";
+                    StatusBar.Text = "Выберите наименование";
                     return;
                 }
                 else if (cbSalesAmount.SelectedIndex == -1)
                 {
-                    StatusBar.Text = "Выбирите размер скидки";
+                    StatusBar.Text = "Выберите размер скидки";
                     return;
                 }
                 switch (cbCategoryTypes.Text)
@@ -132,25 +124,25 @@ namespace Музыкальный_магазин_пластинок
                         break;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 StatusBar.Text = ex.Message;
             }
-            }
+        }
 
         private void SearchSinglesToAddSales(object sender, RoutedEventArgs e)
         {
             try
             {
-                cbSearhingContentResult.ItemsSource = null;
-                cbSearhingContentResult.Items.Clear();
-                var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(tbSearchText.Text));
-                List<string> ComboItems = new List<string>();
-                foreach (var res in result)
-                {
-                    ComboItems.Add(res.Название);
-                }
-                cbSearhingContentResult.ItemsSource = ComboItems;
+            StatusBar.Text = String.Empty;
+            cbSearhingContentResult.ItemsSource = null;
+            var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(tbSearchText.Text));
+            List<string> ComboItems = new List<string>();
+            foreach (var res in result)
+            {
+                ComboItems.Add(res.Название);
+            }
+            cbSearhingContentResult.ItemsSource = ComboItems;
             }
             catch (Exception ex)
             {
@@ -162,9 +154,10 @@ namespace Музыкальный_магазин_пластинок
         {
             try
             {
-                var result = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(cbSearhingContentResult.SelectedItem.ToString()));
-                gvSearchingResalt.ItemsSource = result.ToList();
-                EditColumns(gvSearchingResalt);
+                if (cbSearhingContentResult.SelectedIndex == -1) return;
+                EditSaleSingle = магазин.Пластинки.Where<Пластинки>(s => s.Название.Contains(cbSearhingContentResult.SelectedItem.ToString())).FirstOrDefault();
+                CurientSingleGrid_Copy.DataContext = EditSaleSingle;
+                CurientCover1.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + EditSaleSingle.Обложка));
             }
             catch (Exception ex)
             {
@@ -174,13 +167,13 @@ namespace Музыкальный_магазин_пластинок
 
         private void EditSingle(object sender, RoutedEventArgs e)
         {
-            if(CurientSingle.Название==null)
+            if (CurientSingle.Название == null)
             {
-                StatusBar.Text = "Выбирите пластинку для редактирования";
+                StatusBar.Text = "Выберите пластинку для редактирования";
                 return;
             }
             EditSingleWindow edit = new EditSingleWindow(CurientSingle);
-            
+
             edit.ShowDialog();
         }
 
@@ -188,6 +181,11 @@ namespace Музыкальный_магазин_пластинок
         {
             AddSingleWindow addSingle = new AddSingleWindow();
             addSingle.ShowDialog();
+        }
+
+        private void SaveSaleAmount(object sender, TextChangedEventArgs e)
+        {
+            магазин.SaveChangesAsync();
         }
     }
 }

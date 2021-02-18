@@ -1,17 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Музыкальный_магазин_пластинок
 {
@@ -22,6 +14,7 @@ namespace Музыкальный_магазин_пластинок
     {
         Магазин_пластинок_ магазин = new Магазин_пластинок_();
         Пластинки newSingle = new Пластинки();
+        
         public AddSingleWindow()
         {
             InitializeComponent();
@@ -37,6 +30,7 @@ namespace Музыкальный_магазин_пластинок
                                  select a.Название;
                 cbPublichers.ItemsSource = Publishers.ToList();
                 EditingSingleGrid.DataContext = newSingle;
+                this.DataContext = newSingle;
             }
             catch (Exception ex)
             {
@@ -49,6 +43,7 @@ namespace Музыкальный_магазин_пластинок
         {
             try
             {
+                if (cbArtists.Text == String.Empty) { return; }
                 var Artist_ID = (from a in магазин.Исполнители
                                  where a.Имя == cbArtists.Text
                                  select a.Id).FirstOrDefault();
@@ -66,6 +61,7 @@ namespace Музыкальный_магазин_пластинок
 
                 }
                 StatusBar.Text = String.Empty;
+                EditingSingleGrid.DataContext = newSingle;
             }
             catch (Exception ex)
             {
@@ -77,6 +73,7 @@ namespace Музыкальный_магазин_пластинок
         {
             try
             {
+                if (cbGanres.Text == String.Empty) return; 
                 var Ganre_ID = (from a in магазин.Жанры
                                 where a.Название == cbGanres.Text
                                 select a.Id).FirstOrDefault();
@@ -106,6 +103,8 @@ namespace Музыкальный_магазин_пластинок
         {
             try
             {
+                if (cbPublichers.Text == String.Empty) { return; }
+
                 var Publisher_ID = (from a in магазин.Издатели
                                     where a.Название == cbPublichers.Text
                                     select a.Id).FirstOrDefault();
@@ -153,9 +152,22 @@ namespace Музыкальный_магазин_пластинок
 
         private void AddCover(object sender, MouseButtonEventArgs e)
         {
-            var open = new OpenFileDialog();
-            open.ShowDialog();
-            newSingle.Обложка = open.SafeFileName.ToString();
+            try { if (NewSingleName.Text == string.Empty || cbArtists.Text == string.Empty)
+                {
+                    StatusBar.Text = "Сначала нужно заполнить название пластинки и исполнителя";
+                    return;
+                }
+                var open = new OpenFileDialog();
+                open.ShowDialog();
+                string puth = open.FileName;
+                newSingle.Обложка = $"{cbArtists.Text} - {NewSingleName.Text}.jpg";
+                open.Reset();
+                File.Copy(puth, $"{cbArtists.Text} - {NewSingleName.Text}.jpg");
+            }
+            catch (Exception ex)
+            {
+                StatusBar.Text = ex.Message;
+            }
         }
     }
 }

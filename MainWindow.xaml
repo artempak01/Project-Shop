@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Музыкальный_магазин_пластинок"
         mc:Ignorable="d"
-        Title="Управление магазином пластинок" Height="506.5" Width="769" Icon="картинка.png">
+        Title="Управление магазином пластинок" Height="552" Width="769" Icon="картинка.png">
     <Window.Resources>
         <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\artem.pak01\source\repos\Музыкальный магазин пластинок\bin\debug\default.jpg"/>
     </Window.Resources>
-    <Grid Height="477" VerticalAlignment="Top" Margin="0,0,2,-2">
+    <Grid Height="492" VerticalAlignment="Top" Margin="0,0,2,0">
         <Menu x:Name="MainMenu" Height="25" VerticalAlignment="Top" Margin="0,0,10,0">
             <Menu.Background>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
@@ -41,9 +41,9 @@
             <Button x:Name="logonBtn" Content="Войти" Click="Logon"  Margin="176,173,90.592,19.216" Cursor="Arrow" ClickMode="Press"/>
             <Label x:Name="StatusLable" Grid.ColumnSpan="2" Content="" HorizontalAlignment="Left" Margin="115,238,0,-4.785" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="254" Background="Transparent" Foreground="#FFFF0034"/>
         </Grid>
-        <TabControl x:Name="MainTabControl" Margin="10,30,10,-32" Height="432" VerticalAlignment="Top">
-            <TabItem x:Name="CatalogTabItem" Header="Каталог">
-                <Grid x:Name="CatalogGrid" Background="#FFE5E5E5" Margin="10,10,10,32">
+        <TabControl x:Name="MainTabControl" Margin="10,30,10,0" Height="452" VerticalAlignment="Top">
+            <TabItem x:Name="CatalogTabItem" Header="Каталог" GotFocus="ClearStatusBar">
+                <Grid x:Name="CatalogGrid" Background="#FFE5E5E5" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
@@ -97,7 +97,8 @@
                                 UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" IsReadOnly="True"/>
                             <TextBlock Text="Цена" Grid.Row="7"/>
                             <TextBox Text="{Binding Path=Цена, Mode=TwoWay, 
-                                UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" IsReadOnly="True"/> <TextBlock Text="Цена" Grid.Row="7"/>
+                                UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" IsReadOnly="True"/>
+                            <TextBlock Text="Цена" Grid.Row="7"/>
                             <TextBlock Text="Скидка" Grid.Row="8"/>
                             <TextBox Text="{Binding Path=Скидка, Mode=TwoWay, 
                                 UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="8" IsReadOnly="True"/>
@@ -120,8 +121,8 @@
                     <ListBox x:Name="lbSearchGenreResult" HorizontalAlignment="Left" Height="90" Margin="256.051,65,0,0" VerticalAlignment="Top" Width="192" SelectionChanged="FindAllContentByGanre"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="SaleTabItem" Header="Продажа" Background="#FFE5E5E5">
-                <DockPanel Background="#FFE5E5E5" Margin="10,10,10,23.5">
+            <TabItem x:Name="SaleTabItem" Header="Продажа" Background="#FFE5E5E5" MouseDown="ClearStatusBar" GotFocus="ClearStatusBar">
+                <DockPanel Background="#FFE5E5E5" >
                     <Grid DockPanel.Dock="Top" Margin="0,0,0,6" Height="30">
                         <TextBox x:Name="tBoxSearchToSale" Width="474" HorizontalAlignment="Left" Margin="5,6,0,6"/>
                         <Button Width="135" Content="Найти" HorizontalAlignment="Right" Margin="5,6" Click="SearchSingelToSale">
@@ -177,7 +178,8 @@
                                 <TextBlock Text="Количество треков" Grid.Row="5"/>
                                 <TextBox Text="{Binding Количество_треков, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" IsReadOnly="True"/>
                                 <TextBlock Text="Цена" Grid.Row="6"/>
-                                <TextBox Text="{Binding Цена, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" IsReadOnly="True"/><TextBlock Text="Цена" Grid.Row="6"/>
+                                <TextBox Text="{Binding Цена, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" IsReadOnly="True"/>
+                                <TextBlock Text="Цена" Grid.Row="6"/>
                                 <TextBlock Text="Цена со скидкой" Grid.Row="7"/>
                                 <TextBox x:Name="PriceWithSales" Grid.Column="1" Grid.Row="7" IsReadOnly="True"/>
                             </Grid>
@@ -208,11 +210,11 @@
                     </DockPanel>
                 </DockPanel>
             </TabItem>
-            <TabItem x:Name="SalesTabItem" Header="Акции">
-                <Grid Background="#FFE5E5E5" Margin="10,13,10,7">
+            <TabItem x:Name="SalesTabItem" Header="Акции" MouseDown="ClearStatusBar" GotFocus="ClearStatusBar">
+                <Grid Background="#FFE5E5E5">
                     <StackPanel Margin="10" Orientation="Vertical">
                         <Grid Height="100.96">
-                            <TextBlock Text="Выбирите категорию для применения скидки" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Width="256" Margin="10,0,0,0"/>
+                            <TextBlock Text="Выберите категорию для применения скидки" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Width="256" Margin="10,0,0,0"/>
                             <ComboBox Name="cbCategoryTypes" HorizontalAlignment="Left" Margin="307.203,0,0,0" VerticalAlignment="Top" Width="175.797">
                                 <ComboBoxItem Content="Исполнители"/>
                                 <ComboBoxItem Content="Жанры"/>
@@ -233,23 +235,74 @@
                                 <ComboBoxItem Content="50"/>
 
                             </ComboBox>
-                            <TextBlock HorizontalAlignment="Left" Margin="10,62.96,0,0" TextWrapping="Wrap" Text="Выбирите наименование:" VerticalAlignment="Top"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="10,62.96,0,0" TextWrapping="Wrap" Text="Выберите наименование:" VerticalAlignment="Top"/>
                         </Grid>
                         <Grid Height="85.96" VerticalAlignment="Top" HorizontalAlignment="Right" Width="693">
                             <ComboBox Name="cbSearhingContentResult" HorizontalAlignment="Left" Margin="312,57.96,0,0" VerticalAlignment="Top" Width="170.797" SelectionChanged="ChooseSingleToAddSale"/>
                             <TextBlock Text="или введите название пластинки для поиска и установки скидки вручную" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Margin="10,10,0,0" Height="37" Width="253.797"/>
                             <TextBox x:Name="tbSearchText" HorizontalAlignment="Left" Height="23" Margin="312,20.96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170.797"/>
                             <Button x:Name="tbSearchContent" Content="Найти" HorizontalAlignment="Left" Margin="511,20.96,0,0" VerticalAlignment="Top" Width="75" Click="SearchSinglesToAddSales"/>
-                            <TextBlock HorizontalAlignment="Left" Margin="10,60,0,0" TextWrapping="Wrap" Text="Выбирите наименование:" VerticalAlignment="Top"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="10,60,0,0" TextWrapping="Wrap" Text="Выберите наименование:" VerticalAlignment="Top"/>
                         </Grid>
-                        <DataGrid x:Name="gvSearchingResalt" HorizontalAlignment="Left" Height="177" VerticalAlignment="Top" Width="693"/>
                     </StackPanel>
+                    <Grid ShowGridLines="True" x:Name="CurientSingleGrid_Copy" DataContext="CurientSingle" Margin="32,204,26,0" Background="AliceBlue" Height="158" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="97*"/>
+                            <ColumnDefinition Width="289*"/>
+                            <ColumnDefinition Width="115*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="CurientCover1" Grid.ColumnSpan="1" Margin="5" />
+                        <Grid x:Name="SingleInfo1" Grid.Column="1" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Название"/>
+                            <TextBox Text="{Binding Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" IsReadOnly="True"/>
+                            <TextBlock Text="Исполнитель" Grid.Row="1"/>
+                            <TextBox Text="{Binding Исполнители.Имя, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" IsReadOnly="True"/>
+                            <TextBlock Text="Жанр" Grid.Row="2"/>
+                            <TextBox Text="{Binding Жанры.Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2" IsReadOnly="True"/>
+                            <TextBlock Text="Издатель" Grid.Row="3"/>
+                            <TextBox Text="{Binding Издатели.Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" IsReadOnly="True"/>
+                            <TextBlock Text="Год издания" Grid.Row="4"/>
+                            <TextBox Text="{Binding Год_издания, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" IsReadOnly="True"/>
+                            <TextBlock Text="Количество треков" Grid.Row="5"/>
+                            <TextBox Text="{Binding Количество_треков, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" IsReadOnly="True"/>
+                            <TextBlock Text="Себестоимость" Grid.Row="6"/>
+                            <TextBox Text="{Binding Себестоимость, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" IsReadOnly="True"/>
+                            <TextBlock Text="Цена" Grid.Row="7"/>
+                            <TextBox Text="{Binding Цена, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" IsReadOnly="True"/>
+                            <TextBlock Text="Цена" Grid.Row="7"/>
+                            <TextBlock Text="Скидка" Grid.Row="8"/>
+                            <TextBox Text="{Binding Скидка, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="8" TextChanged="SaveSaleAmount"/>
+
+                        </Grid>
+                        <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="Всего в наличии" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBox Text="{Binding Количество, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" IsReadOnly="True"/>
+                            <TextBlock Text="Зарезервировано" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBox Text="{Binding Количество_зарезервировано, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" IsReadOnly="True"/>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="SalesResultsTabItem" Header="Отчеты" ClipToBounds="True">
-                <StackPanel Background="#FFE5E5E5" Margin="0,0,1,20">
+            <TabItem x:Name="SalesResultsTabItem" Header="Отчеты" ClipToBounds="True" MouseDown="ClearStatusBar" GotFocus="ClearStatusBar">
+                <StackPanel Background="#FFE5E5E5">
                     <DockPanel Margin="10">
-                        <TextBlock HorizontalAlignment="Center" Margin="10,10" Text="Выбирите тип отчета и при необходимости период " DockPanel.Dock="Top"/>
+                        <TextBlock HorizontalAlignment="Center" Margin="10,10" Text="Выберите тип отчета и при необходимости период " DockPanel.Dock="Top"/>
                         <ComboBox x:Name="lbReportTypes" DockPanel.Dock="Left" Margin="10,10" Width="292">
                             <ComboBoxItem Content="Новинки"/>
                             <ComboBoxItem Content="Самые продаваемые пластинки"/>
@@ -268,6 +321,6 @@
                 </StackPanel>
             </TabItem>
         </TabControl>
-        <TextBlock x:Name="StatusBar" Foreground="Red" HorizontalAlignment="Left" Margin="25,438,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="695"/>
+        <TextBlock x:Name="StatusBar" Foreground="Red" HorizontalAlignment="Left" Margin="10,482,0,-23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="33" Width="739"/>
     </Grid>
 </Window>
