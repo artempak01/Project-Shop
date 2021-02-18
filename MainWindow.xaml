@@ -16,7 +16,7 @@
             </Menu.Background>
             <MenuItem Header="Файл">
                 <MenuItem Header="Сменить пользователя" Click="LogOut" ></MenuItem>
-                <MenuItem Header="Добавить пластинку" >
+                <MenuItem Header="Добавить пластинку" Click="AddSingle" >
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="Выход" Click="Exit"></MenuItem>
@@ -162,6 +162,7 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
+                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Text="Название"/>
                                 <TextBox Text="{Binding Название, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" IsReadOnly="True"/>
@@ -176,7 +177,9 @@
                                 <TextBlock Text="Количество треков" Grid.Row="5"/>
                                 <TextBox Text="{Binding Количество_треков, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" IsReadOnly="True"/>
                                 <TextBlock Text="Цена" Grid.Row="6"/>
-                                <TextBox Text="{Binding Цена, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" IsReadOnly="True"/>
+                                <TextBox Text="{Binding Цена, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" IsReadOnly="True"/><TextBlock Text="Цена" Grid.Row="6"/>
+                                <TextBlock Text="Цена со скидкой" Grid.Row="7"/>
+                                <TextBox x:Name="PriceWithSales" Grid.Column="1" Grid.Row="7" IsReadOnly="True"/>
                             </Grid>
                             <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="В наличии" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,0,0,5"/>

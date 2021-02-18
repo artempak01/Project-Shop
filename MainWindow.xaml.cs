@@ -183,5 +183,11 @@ namespace Музыкальный_магазин_пластинок
             
             edit.ShowDialog();
         }
+
+        private void AddSingle(object sender, RoutedEventArgs e)
+        {
+            AddSingleWindow addSingle = new AddSingleWindow();
+            addSingle.ShowDialog();
+        }
     }
 }

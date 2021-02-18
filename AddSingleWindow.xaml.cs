@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,19 +16,15 @@ using System.Windows.Shapes;
 namespace Музыкальный_магазин_пластинок
 {
     /// <summary>
-    /// Логика взаимодействия для EditSingleWindow.xaml
+    /// Логика взаимодействия для AddSingleWindow.xaml
     /// </summary>
-    public partial class EditSingleWindow : Window
+    public partial class AddSingleWindow : Window
     {
-        Пластинки EditingSingle = new Пластинки();
         Магазин_пластинок_ магазин = new Магазин_пластинок_();
-
-        public EditSingleWindow(Пластинки edit)
+        Пластинки newSingle = new Пластинки();
+        public AddSingleWindow()
         {
-            EditingSingle = edit;
             InitializeComponent();
-            EditingSingleGrid.DataContext = EditingSingle;
-            CurientCover.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + EditingSingle.Обложка));
             try
             {
                 var Ganres = from a in магазин.Жанры
@@ -40,16 +36,14 @@ namespace Музыкальный_магазин_пластинок
                 var Publishers = from a in магазин.Издатели
                                  select a.Название;
                 cbPublichers.ItemsSource = Publishers.ToList();
-                cbArtists.SelectedItem = EditingSingle.Исполнители.Имя;
-                cbGanres.SelectedItem = EditingSingle.Жанры.Название;
-                cbPublichers.SelectedItem = EditingSingle.Издатели.Название;
+                EditingSingleGrid.DataContext = newSingle;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 StatusBar.Text = ex.Message;
             }
+            ///для теста
         }
-
 
         private void EditArtist(object sender, RoutedEventArgs e)
         {
@@ -62,21 +56,20 @@ namespace Музыкальный_магазин_пластинок
                 {
                     магазин.Исполнители.Add(new Исполнители { Имя = cbArtists.Text });
                     магазин.SaveChanges();
-                    EditingSingle.Испольнитель_ID = (from a in магазин.Исполнители
-                                     where a.Имя == cbArtists.Text
-                                     select a.Id).FirstOrDefault();
+                    newSingle.Испольнитель_ID = (from a in магазин.Исполнители
+                                                     where a.Имя == cbArtists.Text
+                                                     select a.Id).FirstOrDefault();
                 }
                 else
                 {
-                    EditingSingle.Испольнитель_ID = Artist_ID;
+                    newSingle.Испольнитель_ID = Artist_ID;
 
                 }
                 StatusBar.Text = String.Empty;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 StatusBar.Text = ex.Message;
-
             }
         }
 
@@ -85,19 +78,19 @@ namespace Музыкальный_магазин_пластинок
             try
             {
                 var Ganre_ID = (from a in магазин.Жанры
-                                 where a.Название == cbGanres.Text
-                                 select a.Id).FirstOrDefault();
+                                where a.Название == cbGanres.Text
+                                select a.Id).FirstOrDefault();
                 if (Ganre_ID == 0)
                 {
                     магазин.Жанры.Add(new Жанры { Название = cbGanres.Text });
                     магазин.SaveChanges();
-                    EditingSingle.Жанр_ID = (from a in магазин.Жанры
+                    newSingle.Жанр_ID = (from a in магазин.Жанры
                                              where a.Название == cbGanres.Text
                                              select a.Id).FirstOrDefault();
                 }
                 else
                 {
-                    EditingSingle.Жанр_ID = Ganre_ID;
+                    newSingle.Жанр_ID = Ganre_ID;
 
                 }
                 StatusBar.Text = String.Empty;
@@ -114,19 +107,19 @@ namespace Музыкальный_магазин_пластинок
             try
             {
                 var Publisher_ID = (from a in магазин.Издатели
-                                where a.Название == cbPublichers.Text
-                                select a.Id).FirstOrDefault();
+                                    where a.Название == cbPublichers.Text
+                                    select a.Id).FirstOrDefault();
                 if (Publisher_ID == 0)
                 {
-                    магазин.Издатели.Add(new Издатели {  Название = cbPublichers.Text });
+                    магазин.Издатели.Add(new Издатели { Название = cbPublichers.Text });
                     магазин.SaveChanges();
-                    EditingSingle.Издатель_ID = (from a in магазин.Издатели
+                    newSingle.Издатель_ID = (from a in магазин.Издатели
                                                  where a.Название == cbPublichers.Text
-                                             select a.Id).FirstOrDefault();
+                                                 select a.Id).FirstOrDefault();
                 }
                 else
                 {
-                    EditingSingle.Издатель_ID = Publisher_ID;
+                    newSingle.Издатель_ID = Publisher_ID;
 
                 }
                 StatusBar.Text = String.Empty;
@@ -138,23 +131,31 @@ namespace Музыкальный_магазин_пластинок
             }
         }
 
+        private void CloseWindow(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
         private void SaveChanges(object sender, RoutedEventArgs e)
         {
             try
             {
+                EditingSingleGrid.DataContext = newSingle;
+                магазин.Пластинки.Add(newSingle);
                 магазин.SaveChanges();
-                StatusBar.Text = "Пластинка изменена";
+                StatusBar.Text = "Пластинка сохранена";
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 StatusBar.Text = ex.Message;
-
             }
         }
 
-        private void CloseEditWindow(object sender, RoutedEventArgs e)
+        private void AddCover(object sender, MouseButtonEventArgs e)
         {
-            Close();
+            var open = new OpenFileDialog();
+            open.ShowDialog();
+            newSingle.Обложка = open.SafeFileName.ToString();
         }
     }
 }

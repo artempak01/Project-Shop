@@ -50,7 +50,11 @@ namespace Музыкальный_магазин_пластинок
             магазин.Entry<Пластинки>(SalingSingle).Reference(s => s.Исполнители).Load();
             SingleToSaleGrid.DataContext = SalingSingle;
             CustomersList.SelectedIndex = 0;
-
+            if (SalingSingle.Скидка != 0)
+            {
+                PriceWithSales.Text = (SalingSingle.Цена -(SalingSingle.Цена / 100 * SalingSingle.Скидка )).ToString();
+            }
+            else PriceWithSales.Text = (SalingSingle.Цена).ToString();
             SellingCover.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + SalingSingle.Обложка));
         }
 
@@ -64,75 +68,84 @@ namespace Музыкальный_магазин_пластинок
         {
             ///Проверяем выбрана ли пластинка для продажи и указанно ли количество для продажи
             ///
-            if (SalingSingle == null || amount.Text == String.Empty )
-            {
-                StatusBar.Text = "Выберите пластинку для продажи и укажите количество для продажи";
-                return;
-            }
-            int SellingAmount = 0;
-            int inStockAmount = 0;
-            Int32.TryParse(amount.Text, out SellingAmount);
-            Int32.TryParse(inStock.Text, out inStockAmount);
-            int t = inStockAmount - SellingAmount;
-            ///
-            ///Проверяем валидность указанного для продажи количества
-            ///
-            if (t < 0 && SellingAmount != 0)
-            {
-                StatusBar.Text = "Укажите корректное количество для продажи";
-                return;
-            }
-            else
-            {
-                ///
-                int sellingAmount = 0;
-                int ReserveAmount = 0;
-                Int32.TryParse(amount.Text, out sellingAmount);
-                Покупатели Customer;
-                Продажи newSale = new Продажи();
-                ///
-                ///Проверяем валидность выбранного покупателя
-                ///
-                if (!CustomersList.SelectedItem.ToString().Equals("--клиент не зарегистрирован--"))
+            try {
+                if (SalingSingle == null || amount.Text == String.Empty)
                 {
-                    Customer = магазин.Покупатели.Where<Покупатели>(S => (S.Фамилия + " " + S.Имя).Equals(CustomersList.SelectedItem.ToString())).FirstOrDefault<Покупатели>();
-                    ///Проверяем резерв у покупателя и снимаем его.
-                    if(Customer.Id == SalingSingle.ID_зарезервировавшего)
-                    {
-                        newSale.ID_покупателя = Customer.Id;
-                        ReserveAmount = (int) SalingSingle.Количество_зарезервировано;
-                        SalingSingle.Количество_зарезервировано = 0;
-                        SalingSingle.ID_зарезервировавшего = null;
-                        SalingSingle.Количество += ReserveAmount;
-                    }
+                    StatusBar.Text = "Выберите пластинку для продажи и укажите количество для продажи";
+                    return;
                 }
-                
+                int SellingAmount = 0;
+                int inStockAmount = 0;
+                Int32.TryParse(amount.Text, out SellingAmount);
+                Int32.TryParse(inStock.Text, out inStockAmount);
+                int t = inStockAmount - SellingAmount;
                 ///
-                ///Вносим информацию о продаже в таблицы
-                ///               
-                newSale.ID_пластинки = SalingSingle.Id;
-                newSale.Дата_продажи = DateTime.Now;
-                newSale.Цена = SalingSingle.Цена;
-                newSale.Количество = sellingAmount;
-                SalingSingle.Количество = SalingSingle.Количество - sellingAmount;
-                магазин.Продажи.Add(newSale);
-                магазин.SaveChanges();
-                
+                ///Проверяем валидность указанного для продажи количества
                 ///
-                ///Очищаем форму, сообщаем о рузультате.
-                ///
-                SalingSingle = new Пластинки();
-                SingleToSaleGrid.DataContext = SalingSingle;
-                SellingCover.Source = null;
-                amount.Text = String.Empty;
-                tBoxSearchToSale.Text = String.Empty;
-                lbSearchResultToSale.Items.Clear();
-                CustomersList.Items.Clear();
-                tBoxSearchCustomer.Text = String.Empty;
-                StatusBar.Text = "Успешно";
-            }
+                if (t < 0 && SellingAmount != 0)
+                {
+                    StatusBar.Text = "Укажите корректное количество для продажи";
+                    return;
+                }
+                else
+                {
+                    ///
+                    int sellingAmount = 0;
+                    int ReserveAmount = 0;
+                    Int32.TryParse(amount.Text, out sellingAmount);
+                    Покупатели Customer;
+                    Продажи newSale = new Продажи();
+                    ///
+                    ///Проверяем валидность выбранного покупателя
+                    ///
+                    if (!CustomersList.SelectedItem.ToString().Equals("--клиент не зарегистрирован--"))
+                    {
+                        Customer = магазин.Покупатели.Where<Покупатели>(S => (S.Фамилия + " " + S.Имя).Equals(CustomersList.SelectedItem.ToString())).FirstOrDefault<Покупатели>();
+                        ///Проверяем резерв у покупателя и снимаем его.
+                        if (Customer.Id == SalingSingle.ID_зарезервировавшего)
+                        {
+                            newSale.ID_покупателя = Customer.Id;
+                            ReserveAmount = (int)SalingSingle.Количество_зарезервировано;
+                            SalingSingle.Количество_зарезервировано = 0;
+                            SalingSingle.ID_зарезервировавшего = null;
+                            SalingSingle.Количество += ReserveAmount;
+                        }
+                    }
 
-        }
+                    ///
+                    ///Вносим информацию о продаже в таблицы
+                    ///               
+                    newSale.ID_пластинки = SalingSingle.Id;
+                    newSale.Дата_продажи = DateTime.Now;
+                    decimal i = 0;
+                    decimal.TryParse(PriceWithSales.Text, out i);
+                    newSale.Цена = i;
+                    newSale.Количество = sellingAmount;
+                    SalingSingle.Количество = SalingSingle.Количество - sellingAmount;
+                    магазин.Продажи.Add(newSale);
+                    магазин.SaveChanges();
+
+                    ///
+                    ///Очищаем форму, сообщаем о рузультате.
+                    ///
+                    SalingSingle = new Пластинки();
+                    SingleToSaleGrid.DataContext = SalingSingle;
+                    SellingCover.Source = null;
+                    amount.Text = String.Empty;
+                    tBoxSearchToSale.Text = String.Empty;
+                    lbSearchResultToSale.Items.Clear();
+                    CustomersList.Items.Clear();
+                    tBoxSearchCustomer.Text = String.Empty;
+                    PriceWithSales.Text = String.Empty;
+                    StatusBar.Text = "Успешно";
+                }
+
+            }
+            catch(Exception ex)
+            {
+                StatusBar.Text = ex.Message;
+            }
+            }
 
         /// <summary>
         /// Поиск покупателя.
