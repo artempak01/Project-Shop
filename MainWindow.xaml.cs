@@ -187,5 +187,16 @@ namespace Музыкальный_магазин_пластинок
         {
             магазин.SaveChangesAsync();
         }
+
+        private void DeleteSingle(object sender, RoutedEventArgs e)
+        {
+            if (CurientSingle.Название == null)
+            {
+                StatusBar.Text = "Выберите пластинку для удаления";
+                return;
+            }
+            DeleteSingleWindow delete = new DeleteSingleWindow(CurientSingle);
+            delete.ShowDialog();
+        }
     }
 }

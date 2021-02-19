@@ -15,13 +15,13 @@
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
             </Menu.Background>
             <MenuItem Header="Файл">
-                <MenuItem Header="Сменить пользователя" Click="LogOut" ></MenuItem>
-                <MenuItem Header="Добавить пластинку" Click="AddSingle" >
-                </MenuItem>
+                <MenuItem Header="Сменить пользователя" Click="LogOut"/>
                 <Separator />
                 <MenuItem Header="Выход" Click="Exit"></MenuItem>
             </MenuItem>
             <MenuItem Header="Правка">
+                <MenuItem Header="Добавить пластинку" Click="AddSingle"/>
+                <MenuItem Header="Удалить пластинку" Click="DeleteSingle"/>
                 <MenuItem Header="Редактировать пластинку" Click="EditSingle"/>
             </MenuItem>
             <MenuItem Header="Справка">
