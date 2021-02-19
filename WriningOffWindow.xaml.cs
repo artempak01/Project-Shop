@@ -21,22 +21,12 @@ namespace Музыкальный_магазин_пластинок
     public partial class DeleteSingleWindow : Window
     {
         Пластинки EditingSingle = new Пластинки();
-
         public DeleteSingleWindow(Пластинки Single)
         {
             InitializeComponent();
             EditingSingle = Single;
             EditingSingleGrid.DataContext = EditingSingle;
             CurientCover.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + EditingSingle.Обложка));
-        }
-
-        private void DeleteSingle(object sender, RoutedEventArgs e)
-        {
-            using(Магазин_пластинок_ магазин = new Магазин_пластинок_())
-            {
-                магазин.Пластинки.Remove(EditingSingle);
-                магазин.SaveChanges();
-            }
         }
     }
 }

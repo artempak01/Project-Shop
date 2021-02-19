@@ -20,12 +20,13 @@
                 <MenuItem Header="Выход" Click="Exit"></MenuItem>
             </MenuItem>
             <MenuItem Header="Правка">
+                <MenuItem Header="Редактировать пластинку" Click="EditSingle"/>
                 <MenuItem Header="Добавить пластинку" Click="AddSingle"/>
                 <MenuItem Header="Удалить пластинку" Click="DeleteSingle"/>
-                <MenuItem Header="Редактировать пластинку" Click="EditSingle"/>
+                <MenuItem Header="Списать пластинку" Click="WritingOffSingle" />
             </MenuItem>
             <MenuItem Header="Справка">
-                <MenuItem Header="О программе"></MenuItem>
+                <MenuItem Header="О программе" Click="ShowAbout"></MenuItem>
             </MenuItem>
         </Menu>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="215.216" Margin="88.786,70.392,143.786,113.392" Width="343.428">

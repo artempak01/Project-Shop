@@ -186,6 +186,7 @@ namespace Музыкальный_магазин_пластинок
         private void SaveSaleAmount(object sender, TextChangedEventArgs e)
         {
             магазин.SaveChangesAsync();
+            StatusBar.Text = "Скидка сохранена";
         }
 
         private void DeleteSingle(object sender, RoutedEventArgs e)
@@ -197,6 +198,30 @@ namespace Музыкальный_магазин_пластинок
             }
             DeleteSingleWindow delete = new DeleteSingleWindow(CurientSingle);
             delete.ShowDialog();
+        }
+
+        private void WritingOffSingle(object sender, RoutedEventArgs e)
+        {
+            if (CurientSingle.Название == null)
+            {
+                StatusBar.Text = "Выберите пластинку для списания";
+                return;
+            }
+            else if(CurientSingle.Количество == 0)
+            {
+                StatusBar.Text = "Выбранной пластинки нет в наличии";
+                return;
+            }
+            else
+            {
+                WritingOffSingleWindow delete = new WritingOffSingleWindow(CurientSingle);
+                delete.ShowDialog();
+            }
+        }
+
+        private void ShowAbout(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Автор программы: Пак Артем\nКомпьютерная академия \"Шаг\"\nГруппа: ВПУ911", "О программе", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

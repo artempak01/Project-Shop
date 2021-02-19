@@ -68,7 +68,7 @@
                 <ComboBoxItem Content="Ошибка пользователя"/>
                 <ComboBoxItem Content="Другое"/>
             </ComboBox>
-            <Button Content="Удалить" Width="75" Grid.Column="2" Click="DeleteSingle" />
+            <Button Content="Удалить" Width="75" Grid.Column="2" />
         </Grid>
         <StatusBar HorizontalAlignment="Left" Height="40" Margin="10,270,0,-4" VerticalAlignment="Top" Width="791">
             <TextBlock x:Name="StatusBar" TextWrapping="Wrap" Height="30" Width="781"/>

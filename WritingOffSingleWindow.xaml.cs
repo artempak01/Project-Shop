@@ -16,13 +16,12 @@ using System.Windows.Shapes;
 namespace Музыкальный_магазин_пластинок
 {
     /// <summary>
-    /// Логика взаимодействия для DeleteSingleWindow.xaml
+    /// Логика взаимодействия для WritingOffSingleWindow.xaml
     /// </summary>
-    public partial class DeleteSingleWindow : Window
+    public partial class WritingOffSingleWindow : Window
     {
         Пластинки EditingSingle = new Пластинки();
-
-        public DeleteSingleWindow(Пластинки Single)
+        public WritingOffSingleWindow(Пластинки Single)
         {
             InitializeComponent();
             EditingSingle = Single;
@@ -30,12 +29,23 @@ namespace Музыкальный_магазин_пластинок
             CurientCover.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "\\" + EditingSingle.Обложка));
         }
 
-        private void DeleteSingle(object sender, RoutedEventArgs e)
+        private void WriteOffSingle(object sender, RoutedEventArgs e)
         {
-            using(Магазин_пластинок_ магазин = new Магазин_пластинок_())
+            int i = 0;
+            int j = 0;
+            Int32.TryParse(tbCount.Text, out i);
+            Int32.TryParse(tbAmount.Text, out j);
+            if (i - j < 0)
             {
-                магазин.Пластинки.Remove(EditingSingle);
-                магазин.SaveChanges();
+                StatusBar.Text = "Укажите корректное количество";
+            }
+            else
+            {
+                using (Магазин_пластинок_ магазин = new Магазин_пластинок_())
+                {
+                    EditingSingle.Количество -= j;
+                    магазин.SaveChanges();
+                }
             }
         }
     }
