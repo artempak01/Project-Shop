@@ -97,6 +97,7 @@ namespace Музыкальный_магазин_пластинок
             SalingSingle = new Пластинки();
             SellingCover.Source = null;
             CurientCover.Source = null;
+            lbSearchGenreResult.Items.Clear();
             CurientSingleGrid.DataContext = CurientSingle;
             SingleToSaleGrid.DataContext = SalingSingle;
             CustomersList.Items.Clear();
